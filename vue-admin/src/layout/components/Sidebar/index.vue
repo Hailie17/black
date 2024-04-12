@@ -3,19 +3,9 @@
     <logo />
     <el-scrollbar wrap-class="scrollbar-wrapper">
       <!-- 左侧菜单组件 -->
-      <el-menu
-        :default-active="activeMenu"
-        mode="vertical"
-        :collapse-transition="false"
-        :unique-opened="true"
-      >
+      <el-menu :default-active="activeMenu" mode="vertical" :collapse-transition="false" :unique-opened="true">
         <!-- 菜单中的每一项 -->
-        <sidebar-item
-          v-for="route in routes"
-          :key="route.path"
-          :item="route"
-          :base-path="route.path"
-        />
+        <sidebar-item v-for="route in routes" :key="route.path" :item="route" :base-path="route.path" />
       </el-menu>
     </el-scrollbar>
   </div>
@@ -28,6 +18,7 @@ export default {
   components: { SidebarItem, Logo },
   computed: {
     routes() {
+      // this.$router.options.routes 创建路由时传入的路由规则
       return this.$router.options.routes
     },
     activeMenu() {
@@ -42,4 +33,3 @@ export default {
   }
 }
 </script>
-
