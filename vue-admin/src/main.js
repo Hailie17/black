@@ -10,6 +10,8 @@ import App from './App'
 
 import store from './store'
 
+// 测试
+
 import router from './router'
 // 注册svg
 import '@/icons'
