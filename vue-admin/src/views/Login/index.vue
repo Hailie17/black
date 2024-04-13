@@ -22,7 +22,6 @@
 </template>
 
 <script>
-import { loginAPI } from '@/api/user'
 export default {
   name: 'Login',
   data() {
@@ -39,9 +38,9 @@ export default {
   },
   methods: {
     submit() {
-      this.$refs.form.validate(async valid => {
+      this.$refs.form.validate(valid => {
         if (!valid) return false
-        await loginAPI(this.loginForm)
+        this.$store.dispatch('user/loginActions', this.loginForm)
       })
     }
   }
