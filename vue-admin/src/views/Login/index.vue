@@ -38,9 +38,11 @@ export default {
   },
   methods: {
     submit() {
-      this.$refs.form.validate(valid => {
+      this.$refs.form.validate(async valid => {
         if (!valid) return false
-        this.$store.dispatch('user/loginActions', this.loginForm)
+
+        await this.$store.dispatch('user/loginActions', this.loginForm)
+        this.$router.push('/')
       })
     }
   }
