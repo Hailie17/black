@@ -1,13 +1,15 @@
 import { loginAPI } from '@/api/user'
+import { setToken, getToken } from '@/utils/auth'
 
 export default {
   namespaced: true, // vuex模块命名空间
   state: {
-    token: ''
+    token: getToken() || ''
   },
   mutations: {
     setToken(state, token) {
       state.token = token
+      setToken(token)
     }
   },
   actions: {
