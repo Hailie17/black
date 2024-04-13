@@ -14,7 +14,7 @@
           <el-checkbox>记住我</el-checkbox>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" class="login_btn">登录</el-button>
+          <el-button type="primary" class="login_btn" @click="submit">登录</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -34,6 +34,13 @@ export default {
         username: [{ required: true, message: '请输入账号', trigger: 'blur' }],
         password: [{ required: true, message: '请输入密码', trigger: 'blur' }]
       }
+    }
+  },
+  methods: {
+    submit() {
+      this.$refs[form].validate(valid => {
+        if (!valid) return false
+      })
     }
   }
 }
