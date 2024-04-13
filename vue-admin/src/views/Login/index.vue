@@ -11,7 +11,7 @@
           <el-input type="password" v-model="loginForm.password" />
         </el-form-item>
         <el-form-item prop="remember">
-          <el-checkbox>记住我</el-checkbox>
+          <el-checkbox v-model="rememberMe">记住我</el-checkbox>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" class="login_btn" @click="submit">登录</el-button>
@@ -33,16 +33,33 @@ export default {
       rules: {
         username: [{ required: true, message: '请输入账号', trigger: 'blur' }],
         password: [{ required: true, message: '请输入密码', trigger: 'blur' }]
-      }
+      },
+      rememberMe: false
+    }
+  },
+  created() {
+    const loginData = localStorage.getItem('form-key')
+    if (loginData) {
+      const { username, password } = JSON.parse(loginData)
+      this.loginForm.username = username
+      this.loginForm.password = password
     }
   },
   methods: {
     submit() {
       this.$refs.form.validate(async valid => {
         if (!valid) return false
-
-        await this.$store.dispatch('user/loginActions', this.loginForm)
-        this.$router.push('/')
+        try {
+          await this.$store.dispatch('user/loginActions', this.loginForm)
+          if (this.rememberMe) {
+            localStorage.setItem('form-key', JSON.stringify(this.loginForm))
+          } else {
+            localStorage.removeItem('form-key')
+          }
+          this.$router.push('/')
+        } catch (error) {
+          this.$message.error(error)
+        }
       })
     }
   }
