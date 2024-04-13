@@ -1,4 +1,5 @@
 import axios from 'axios'
+import store from '@/store'
 // axios.create() 创建实例
 const service = axios.create({
   baseURL: 'https://api-hmzs.itheima.net/v1',
@@ -8,6 +9,10 @@ const service = axios.create({
 // 请求拦截器
 service.interceptors.request.use(
   config => {
+    const token = store.state.user.token
+    if (token) {
+      config.headers.Authorization = token
+    }
     return config
   },
   error => {
