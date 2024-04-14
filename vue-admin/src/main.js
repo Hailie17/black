@@ -16,6 +16,8 @@ import router from './router'
 // 注册svg
 import '@/icons'
 
+import './permission'
+
 Vue.use(ElementUI)
 
 // 上线后，控制台不显示警告
