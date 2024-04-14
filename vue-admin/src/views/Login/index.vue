@@ -56,7 +56,11 @@ export default {
           } else {
             localStorage.removeItem('form-key')
           }
-          this.$router.push('/')
+          if (this.$route.query.redirect) {
+            this.$router.push(this.$route.query.redirect)
+          } else {
+            this.$router.push('/')
+          }
         } catch (error) {
           this.$message.error(error)
         }
