@@ -27,6 +27,7 @@ export default {
   methods: {
     // 退出登录
     logout() {
+      this.$store.commit('user/removeToken')
       this.$router.push(`/login?redirect=${this.$route.fullPath}`)
     }
   }
@@ -113,7 +114,7 @@ export default {
       .avatar-wrapper {
         margin-top: 5px;
         position: relative;
-        .name{
+        .name {
           font-weight: 600;
           cursor: pointer;
         }
