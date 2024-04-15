@@ -13,3 +13,9 @@ export function loginAPI(data) {
     data
   })
 }
+
+export function getIndustryAPI() {
+  return request({
+    url: 'park/industry'
+  })
+}
