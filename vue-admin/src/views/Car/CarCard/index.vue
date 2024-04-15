@@ -19,13 +19,13 @@
     </div>
     <!-- 表格区域 -->
     <div class="table">
-      <el-table style="width: 100%" :data="[]">
+      <el-table style="width: 100%" :data="list">
         <el-table-column type="index" label="序号" />
-        <el-table-column label="车主名称" />
-        <el-table-column label="联系方式" />
-        <el-table-column label="车牌号码" />
-        <el-table-column label="车辆品牌" />
-        <el-table-column label="剩余有效天数" />
+        <el-table-column label="车主名称" prop="personName" />
+        <el-table-column label="联系方式" prop="phoneNumber" />
+        <el-table-column label="车牌号码" prop="carNumber" />
+        <el-table-column label="车辆品牌" prop="carBrand" />
+        <el-table-column label="剩余有效天数" prop="totalEffectiveDate" />
         <el-table-column label="操作" fixed="right" width="180">
           <template #default="scope">
             <el-button size="mini" type="text">续费</el-button>
@@ -67,7 +67,31 @@
 </template>
 
 <script>
-export default {}
+import { getCardListAPI } from '@/api/card'
+export default {
+  name: 'Card',
+  data() {
+    return {
+      params: {
+        page: 1,
+        pageSize: 10,
+        carNumber: '',
+        personName: '',
+        cardStatus: null
+      },
+      list: []
+    }
+  },
+  created() {
+    this.getCardList()
+  },
+  methods: {
+    async getCardList() {
+      const res = await getCardListAPI(this.params)
+      this.list = res.data.rows
+    }
+  }
+}
 </script>
 
 <style lang="scss" scoped>
