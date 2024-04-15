@@ -1,5 +1,6 @@
 import axios from 'axios'
 import store from '@/store'
+import { Message } from 'element-ui'
 // axios.create() 创建实例
 const service = axios.create({
   baseURL: 'https://api-hmzs.itheima.net/v1',
@@ -26,6 +27,7 @@ service.interceptors.response.use(
     return response.data
   },
   error => {
+    Message.error(error.response.data.msg)
     return Promise.reject(error)
   }
 )

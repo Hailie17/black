@@ -49,20 +49,16 @@ export default {
     submit() {
       this.$refs.form.validate(async valid => {
         if (!valid) return false
-        try {
-          await this.$store.dispatch('user/loginActions', this.loginForm)
-          if (this.rememberMe) {
-            localStorage.setItem('form-key', JSON.stringify(this.loginForm))
-          } else {
-            localStorage.removeItem('form-key')
-          }
-          if (this.$route.query.redirect) {
-            this.$router.push(this.$route.query.redirect)
-          } else {
-            this.$router.push('/')
-          }
-        } catch (error) {
-          this.$message.error(error)
+        await this.$store.dispatch('user/loginActions', this.loginForm)
+        if (this.rememberMe) {
+          localStorage.setItem('form-key', JSON.stringify(this.loginForm))
+        } else {
+          localStorage.removeItem('form-key')
+        }
+        if (this.$route.query.redirect) {
+          this.$router.push(this.$route.query.redirect)
+        } else {
+          this.$router.push('/')
         }
       })
     }
