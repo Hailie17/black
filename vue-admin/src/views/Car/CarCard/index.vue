@@ -38,7 +38,7 @@
       </el-table>
     </div>
     <div class="page-container">
-      <el-pagination layout="total, prev, pager, next" :total="0" />
+      <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="params.current" :page-sizes="[10, 20, 30, 40]" :page-size="params.pageSize" layout="total, sizes, prev, pager, next, jumper" :total="total"> </el-pagination>
     </div>
     <!-- 添加楼宇 -->
     <el-dialog title="添加楼宇" width="580px">
@@ -80,7 +80,8 @@ export default {
         personName: '',
         cardStatus: null
       },
-      list: []
+      list: [],
+      total: 0
     }
   },
   created() {
@@ -90,6 +91,7 @@ export default {
     async getCardList() {
       const res = await getCardListAPI(this.params)
       this.list = res.data.rows
+      this.total = res.data.total
     },
     formatStatus(row, column, cellValue, index) {
       const Map = {
@@ -97,6 +99,15 @@ export default {
         1: '不可用'
       }
       return Map[cellValue]
+    },
+    // 分页
+    handleSizeChange(val) {
+      this.params.pageSize = val
+      this.getCardList()
+    },
+    handleCurrentChange(val) {
+      this.params.current = val
+      this.getCardList()
     }
   }
 }
