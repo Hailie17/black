@@ -10,7 +10,7 @@
       <el-select v-model="params.cardStatus">
         <el-option v-for="item in statusList" :key="item.value" :label="item.text" :value="item.value" />
       </el-select>
-      <el-button type="primary" class="search-btn" @click="getCardList">查询</el-button>
+      <el-button type="primary" class="search-btn" @click="search">查询</el-button>
     </div>
     <!-- 新增删除操作区域 -->
     <div class="create-container">
@@ -97,6 +97,10 @@ export default {
       const res = await getCardListAPI(this.params)
       this.list = res.data.rows
       this.total = res.data.total
+    },
+    search() {
+      this.params.page = 1
+      this.getCardList()
     },
     indexFormat(index) {
       return (this.params.page - 1) * this.params.pageSize + index + 1
