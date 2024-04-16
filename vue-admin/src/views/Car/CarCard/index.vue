@@ -3,14 +3,14 @@
     <!-- 搜索区域 -->
     <div class="search-container">
       <span class="search-label">车牌号码：</span>
-      <el-input clearable placeholder="请输入内容" class="search-main" />
+      <el-input v-model="params.carNumber" clearable placeholder="请输入内容" class="search-main" />
       <span class="search-label">车主姓名：</span>
-      <el-input clearable placeholder="请输入内容" class="search-main" />
+      <el-input v-model="params.personName" clearable placeholder="请输入内容" class="search-main" />
       <span class="search-label">状态：</span>
-      <el-select>
-        <el-option v-for="item in []" :key="item.id" />
+      <el-select v-model="params.cardStatus">
+        <el-option v-for="item in statusList" :key="item.value" :label="item.text" :value="item.value" />
       </el-select>
-      <el-button type="primary" class="search-btn">查询</el-button>
+      <el-button type="primary" class="search-btn" @click="getCardList">查询</el-button>
     </div>
     <!-- 新增删除操作区域 -->
     <div class="create-container">
@@ -81,7 +81,12 @@ export default {
         cardStatus: null
       },
       list: [],
-      total: 0
+      total: 0,
+      statusList: [
+        { text: '全部', value: null },
+        { text: '可用', value: '0' },
+        { text: '已过期', value: '1' }
+      ]
     }
   },
   created() {
