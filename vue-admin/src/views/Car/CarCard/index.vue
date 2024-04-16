@@ -20,7 +20,7 @@
     <!-- 表格区域 -->
     <div class="table">
       <el-table style="width: 100%" :data="list">
-        <el-table-column type="index" label="序号" />
+        <el-table-column type="index" label="序号" :index="indexFormat" />
         <el-table-column label="车主名称" prop="personName" />
         <el-table-column label="联系方式" prop="phoneNumber" />
         <el-table-column label="车牌号码" prop="carNumber" />
@@ -92,6 +92,9 @@ export default {
       const res = await getCardListAPI(this.params)
       this.list = res.data.rows
       this.total = res.data.total
+    },
+    indexFormat(index) {
+      return (this.params.page - 1) * this.params.pageSize + index + 1
     },
     formatStatus(row, column, cellValue, index) {
       const Map = {
