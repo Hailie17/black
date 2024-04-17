@@ -7,7 +7,7 @@
       <div class="form-container">
         <div class="title">车辆信息</div>
         <div class="form">
-          <el-form :model="carInfoForm" :rules="rules" label-width="100px">
+          <el-form ref="carInfoForm" :model="carInfoForm" :rules="rules" label-width="100px">
             <el-form-item label="车主姓名" prop="personName">
               <el-input v-model="carInfoForm.personName" />
             </el-form-item>
@@ -26,16 +26,16 @@
       <div class="form-container">
         <div class="title">最新一次月卡缴费信息</div>
         <div class="form">
-          <el-form label-width="100px">
-            <el-form-item label="有效日期">
-              <el-input />
+          <el-form label-width="100px" ref="feeInfoForm" :model="feeInfoForm" :rules="feeInfoFormRules">
+            <el-form-item label="有效日期" prop="payTime">
+              <el-date-picker v-model="feeInfoForm.payTime" type="daterange" format="yyyy-MM-dd" value-format="yyyy-MM-dd" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期"></el-date-picker>
             </el-form-item>
-            <el-form-item label="支付金额">
-              <el-input />
+            <el-form-item label="支付金额" prop="paymentAmount">
+              <el-input v-model="feeInfoForm.paymentAmount" />
             </el-form-item>
-            <el-form-item label="支付方式">
-              <el-select>
-                <el-option v-for="item in [{}]" :key="item.industryCode" :value="item.industryCode" :label="item.industryName" />
+            <el-form-item label="支付方式" prop="paymentMethod">
+              <el-select v-model="feeInfoForm.paymentMethod">
+                <el-option v-for="item in payMethodList" :key="item.value" :value="item.value" :label="item.text" />
               </el-select>
             </el-form-item>
           </el-form>
@@ -45,13 +45,14 @@
     <footer class="add-footer">
       <div class="btn-container">
         <el-button>重置</el-button>
-        <el-button type="primary">确定</el-button>
+        <el-button type="primary" @click="confirmAdd">确定</el-button>
       </div>
     </footer>
   </div>
 </template>
 
 <script>
+import { addCardAPI } from '@/api/card'
 export default {
   name: 'addCard',
   data() {
@@ -62,23 +63,54 @@ export default {
         carNumber: '',
         carBrand: ''
       },
+      feeInfoForm: {
+        payTime: '',
+        paymentAmount: '',
+        paymentMethod: ''
+      },
+      payMethodList: [
+        { text: '支付宝', value: 'Alipay' },
+        { text: '微信', value: 'Wechat' },
+        { text: '现金', value: 'Cash' }
+      ],
       rules: {
         personName: [{ required: true, message: '车主姓名不能为空', trigger: 'blur' }],
-        phoneNumber: [
-          { required: true, message: '联系方式姓名不能为空', trigger: 'blur' },
-          { pattern: /^1[3-9]\d{9}&/, message: '手机号格式不正确', trigger: 'blur' }
-        ],
+        phoneNumber: [{ required: true, message: '联系方式不能为空', trigger: 'blur' }],
         carNumber: [
           { required: true, message: '车牌号码不能为空', trigger: 'blur' },
           { validator: this.validatorCarNumber, trigger: 'blur' }
         ],
         carBrand: [{ required: true, message: '汽车品牌不能为空', trigger: 'blur' }]
+      },
+      feeInfoFormRules: {
+        payTime: [{ required: true, message: '有效日期不能为空' }],
+        paymentAmount: [{ required: true, message: '支付金额不能为空', trigger: 'blur' }],
+        paymentMethod: [{ required: true, message: '支付方式不能为空', trigger: 'change' }]
       }
     }
   },
   methods: {
+    confirmAdd() {
+      this.$refs.carInfoForm.validate(valid => {
+        if (!valid) return
+        this.$refs.feeInfoForm.validate(async valid => {
+          if (!valid) return
+          const requestData = {
+            ...this.carInfoForm,
+            ...this.feeInfoForm,
+            cardStartDate: this.feeInfoForm.payTime[0],
+            cardEndDate: this.feeInfoForm.payTime[1]
+          }
+          delete requestData.payTime
+          await addCardAPI(requestData)
+          this.$message.success('添加月卡成功')
+          this.$router.back()
+        })
+      })
+    },
+    // 自定义表单验证规则
     validatorCarNumber(rule, value, callback) {
-      const plateNumberRegex = /^[\u4E00-\u9FA5][\da-zA-Z]{6}$/
+      const plateNumberRegex = /^[\u4E00-\u9FA5][\da-zA-Z]{7}$/
       if (plateNumberRegex.test(value)) {
         callback()
       } else {
