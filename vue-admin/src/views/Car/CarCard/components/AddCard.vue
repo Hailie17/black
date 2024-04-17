@@ -78,8 +78,11 @@ export default {
   },
   methods: {
     validatorCarNumber(rule, value, callback) {
-      const plateNumberRegex = /^[\u4Eoo-\u9FA5][\da-zA-Z]{6]$/
+      const plateNumberRegex = /^[\u4E00-\u9FA5][\da-zA-Z]{6}$/
       if (plateNumberRegex.test(value)) {
+        callback()
+      } else {
+        callback(new Error('车牌号码不正确'))
       }
     }
   }
