@@ -7,18 +7,18 @@
       <div class="form-container">
         <div class="title">车辆信息</div>
         <div class="form">
-          <el-form label-width="100px">
-            <el-form-item label="车主姓名">
-              <el-input />
+          <el-form :model="carInfoForm" :rules="rules" label-width="100px">
+            <el-form-item label="车主姓名" prop="personName">
+              <el-input v-model="carInfoForm.personName" />
             </el-form-item>
-            <el-form-item label="联系方式">
-              <el-input />
+            <el-form-item label="联系方式" prop="phoneNumber">
+              <el-input v-model="carInfoForm.phoneNumber" />
             </el-form-item>
-            <el-form-item label="车辆号码">
-              <el-input />
+            <el-form-item label="车辆号码" prop="carNumber">
+              <el-input v-model="carInfoForm.carNumber" />
             </el-form-item>
-            <el-form-item label="企业联系人">
-              <el-input />
+            <el-form-item label="汽车品牌" prop="carBrand">
+              <el-input v-model="carInfoForm.carBrand" />
             </el-form-item>
           </el-form>
         </div>
@@ -52,7 +52,25 @@
 </template>
 
 <script>
-export default {}
+export default {
+  name: 'addCard',
+  data() {
+    return {
+      carInfoForm: {
+        personName: '',
+        phoneNumber: '',
+        carNumber: '',
+        carBrand: ''
+      },
+      rules: {
+        personName: [{ required: true, message: '车主姓名不能为空', trigger: 'blur' }],
+        phoneNumber: [{ required: true, message: '联系方式姓名不能为空', trigger: 'blur' }],
+        carNumber: [{ required: true, message: '车牌号码不能为空', trigger: 'blur' }],
+        carBrand: [{ required: true, message: '汽车品牌不能为空', trigger: 'blur' }]
+      }
+    }
+  }
+}
 </script>
 
 <style scoped lang="scss">
