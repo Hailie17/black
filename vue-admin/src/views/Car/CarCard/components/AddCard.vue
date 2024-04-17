@@ -44,7 +44,7 @@
     </main>
     <footer class="add-footer">
       <div class="btn-container">
-        <el-button>重置</el-button>
+        <el-button @click="resetForm">重置</el-button>
         <el-button type="primary" @click="confirmAdd">确定</el-button>
       </div>
     </footer>
@@ -107,6 +107,12 @@ export default {
           this.$router.back()
         })
       })
+    },
+    // 重置表单
+    resetForm() {
+      // resetFields 只能清空加了 prop的表单域
+      this.$refs.carInfoForm.resetFields()
+      this.$refs.feeInfoForm.resetFields()
     },
     // 自定义表单验证规则
     validatorCarNumber(rule, value, callback) {
