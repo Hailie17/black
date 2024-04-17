@@ -68,8 +68,18 @@ export default {
           { required: true, message: '联系方式姓名不能为空', trigger: 'blur' },
           { pattern: /^1[3-9]\d{9}&/, message: '手机号格式不正确', trigger: 'blur' }
         ],
-        carNumber: [{ required: true, message: '车牌号码不能为空', trigger: 'blur' }],
+        carNumber: [
+          { required: true, message: '车牌号码不能为空', trigger: 'blur' },
+          { validator: this.validatorCarNumber, trigger: 'blur' }
+        ],
         carBrand: [{ required: true, message: '汽车品牌不能为空', trigger: 'blur' }]
+      }
+    }
+  },
+  methods: {
+    validatorCarNumber(rule, value, callback) {
+      const plateNumberRegex = /^[\u4Eoo-\u9FA5][\da-zA-Z]{6]$/
+      if (plateNumberRegex.test(value)) {
       }
     }
   }
