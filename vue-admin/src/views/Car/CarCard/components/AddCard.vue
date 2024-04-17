@@ -64,7 +64,10 @@ export default {
       },
       rules: {
         personName: [{ required: true, message: '车主姓名不能为空', trigger: 'blur' }],
-        phoneNumber: [{ required: true, message: '联系方式姓名不能为空', trigger: 'blur' }],
+        phoneNumber: [
+          { required: true, message: '联系方式姓名不能为空', trigger: 'blur' },
+          { pattern: /^1[3-9]\d{9}&/, message: '手机号格式不正确', trigger: 'blur' }
+        ],
         carNumber: [{ required: true, message: '车牌号码不能为空', trigger: 'blur' }],
         carBrand: [{ required: true, message: '汽车品牌不能为空', trigger: 'blur' }]
       }
