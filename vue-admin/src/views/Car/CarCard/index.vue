@@ -31,7 +31,7 @@
           <template #default="scope">
             <el-button size="mini" type="text">续费</el-button>
             <el-button size="mini" type="text">查看</el-button>
-            <el-button size="mini" type="text">编辑</el-button>
+            <el-button size="mini" type="text" @click="editCard(scope.row.id)">编辑</el-button>
             <el-button size="mini" type="text">删除</el-button>
           </template>
         </el-table-column>
@@ -97,6 +97,15 @@ export default {
       const res = await getCardListAPI(this.params)
       this.list = res.data.rows
       this.total = res.data.total
+    },
+    // 编辑
+    editCard(id) {
+      this.$router.push({
+        path: '/cardAdd',
+        query: {
+          id
+        }
+      })
     },
     search() {
       this.params.page = 1
