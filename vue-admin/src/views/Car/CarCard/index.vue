@@ -98,6 +98,10 @@ export default {
         .then(async () => {
           await deletCardAPI(id)
           this.$message.success('删除成功')
+          // 该页最后一条数据删除时，页面--
+          if (this.params.page > 1 && this.list.legnth === 1) {
+            this.params.page--
+          }
           this.getCardList()
         })
         .catch(() => {})
