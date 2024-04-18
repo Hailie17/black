@@ -44,3 +44,13 @@ export function editCardAPI(data) {
     data
   })
 }
+
+/**
+ * 删除月卡
+ */
+export function deletCardAPI(id) {
+  return request({
+    url: `parking/card/${id}`,
+    method: 'DELETE'
+  })
+}

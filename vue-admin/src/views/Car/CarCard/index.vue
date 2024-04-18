@@ -32,7 +32,7 @@
             <el-button size="mini" type="text">续费</el-button>
             <el-button size="mini" type="text">查看</el-button>
             <el-button size="mini" type="text" @click="editCard(scope.row.id)">编辑</el-button>
-            <el-button size="mini" type="text">删除</el-button>
+            <el-button size="mini" type="text" @click="deletCard(scope.row.id)">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -68,7 +68,7 @@
 </template>
 
 <script>
-import { getCardListAPI } from '@/api/card'
+import { getCardListAPI, deletCardAPI } from '@/api/card'
 export default {
   name: 'Card',
   data() {
@@ -93,6 +93,15 @@ export default {
     this.getCardList()
   },
   methods: {
+    deletCard(id) {
+      this.$confirm('确认删除该月卡吗?', '温馨提示')
+        .then(async () => {
+          await deletCardAPI(id)
+          this.$message.success('删除成功')
+          this.getCardList()
+        })
+        .catch(() => {})
+    },
     async getCardList() {
       const res = await getCardListAPI(this.params)
       this.list = res.data.rows
