@@ -1,7 +1,7 @@
 <template>
   <div class="add-card">
     <header class="add-header">
-      <el-page-header content="增加月卡" @back="$router.back()" />
+      <el-page-header :content="id ? '编辑月卡' : '增加月卡'" @back="$router.back()" />
     </header>
     <main class="add-main">
       <div class="form-container">
