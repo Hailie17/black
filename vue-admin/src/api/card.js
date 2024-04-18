@@ -24,3 +24,12 @@ export function addCardAPI(data) {
     data
   })
 }
+
+/**
+ * 月卡详情
+ */
+export function getCardDetailAPI(id) {
+  return request({
+    url: `parking/card/${id}`
+  })
+}

@@ -52,7 +52,7 @@
 </template>
 
 <script>
-import { addCardAPI } from '@/api/card'
+import { addCardAPI, getCardDetailAPI } from '@/api/card'
 export default {
   name: 'addCard',
   data() {
@@ -89,7 +89,24 @@ export default {
       }
     }
   },
+  computed: {
+    id() {
+      return this.$route.query.id
+    }
+  },
+  created() {
+    if (this.id) {
+      this.getCardDetail(this.id)
+    }
+  },
   methods: {
+    async getCardDetail(id) {
+      const { data } = await getCardDetailAPI(id)
+      const { personName, phoneNumber, carNumber, carBrand } = data
+      this.carInfoForm = { personName, phoneNumber, carNumber, carBrand }
+      const { cardStartDate, cardEndDate, paymentAmount, paymentMethod } = data.rechargeList[0]
+      this.feeInfoForm = { payTime: [cardStartDate, cardEndDate], paymentAmount, paymentMethod }
+    },
     confirmAdd() {
       this.$refs.carInfoForm.validate(valid => {
         if (!valid) return
