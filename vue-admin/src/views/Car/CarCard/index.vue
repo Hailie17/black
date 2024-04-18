@@ -15,11 +15,12 @@
     <!-- 新增删除操作区域 -->
     <div class="create-container">
       <el-button type="primary" @click="$router.push('/cardAdd')">添加月卡</el-button>
-      <el-button>批量删除</el-button>
+      <el-button @click="batchDeleteCard">批量删除</el-button>
     </div>
     <!-- 表格区域 -->
     <div class="table">
-      <el-table style="width: 100%" :data="list">
+      <el-table style="width: 100%" :data="list" @selection-change="handleSelectionChange">
+        <el-table-column type="selection" width="55" />
         <el-table-column type="index" label="序号" :index="indexFormat" />
         <el-table-column label="车主名称" prop="personName" />
         <el-table-column label="联系方式" prop="phoneNumber" />
@@ -86,13 +87,32 @@ export default {
         { text: '全部', value: null },
         { text: '可用', value: '0' },
         { text: '已过期', value: '1' }
-      ]
+      ],
+      selectedCards: []
     }
   },
   created() {
     this.getCardList()
   },
   methods: {
+    batchDeleteCard() {
+      if (this.selectedCards.legnth < 1) {
+        this.$message.warning('请选择要删除的数据')
+        return
+      }
+      const ids = this.selectedCards.map(item => {
+        return item.id
+      })
+      console.log(ids, 'id')
+      this.$confirm('确认删除选中的数据吗?', '温馨提示').then(async () => {
+        await deletCardAPI(ids.join(','))
+        this.$message.success('批量删除成功')
+        this.getCardList()
+      })
+    },
+    handleSelectionChange(val) {
+      this.selectedCards = val
+    },
     deletCard(id) {
       this.$confirm('确认删除该月卡吗?', '温馨提示')
         .then(async () => {
