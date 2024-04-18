@@ -52,7 +52,7 @@
 </template>
 
 <script>
-import { addCardAPI, getCardDetailAPI } from '@/api/card'
+import { addCardAPI, getCardDetailAPI, editCardAPI } from '@/api/card'
 export default {
   name: 'addCard',
   data() {
@@ -102,10 +102,10 @@ export default {
   methods: {
     async getCardDetail(id) {
       const { data } = await getCardDetailAPI(id)
-      const { personName, phoneNumber, carNumber, carBrand } = data
-      this.carInfoForm = { personName, phoneNumber, carNumber, carBrand }
-      const { cardStartDate, cardEndDate, paymentAmount, paymentMethod } = data.rechargeList[0]
-      this.feeInfoForm = { payTime: [cardStartDate, cardEndDate], paymentAmount, paymentMethod }
+      const { personName, phoneNumber, carNumber, carBrand, carInfoId } = data
+      this.carInfoForm = { personName, phoneNumber, carNumber, carBrand, carInfoId }
+      const { cardStartDate, cardEndDate, paymentAmount, paymentMethod, rechargeId } = data.rechargeList[0]
+      this.feeInfoForm = { payTime: [cardStartDate, cardEndDate], paymentAmount, paymentMethod, rechargeId }
     },
     confirmAdd() {
       this.$refs.carInfoForm.validate(valid => {
@@ -119,8 +119,13 @@ export default {
             cardEndDate: this.feeInfoForm.payTime[1]
           }
           delete requestData.payTime
-          await addCardAPI(requestData)
-          this.$message.success('添加月卡成功')
+          if (this.id) {
+            await editCardAPI(requestData)
+            this.$message.success('编辑月卡成功')
+          } else {
+            await addCardAPI(requestData)
+            this.$message.success('添加月卡成功')
+          }
           this.$router.back()
         })
       })
@@ -133,7 +138,7 @@ export default {
     },
     // 自定义表单验证规则
     validatorCarNumber(rule, value, callback) {
-      const plateNumberRegex = /^[\u4E00-\u9FA5][\da-zA-Z]{7}$/
+      const plateNumberRegex = /^[\u4E00-\u9FA5][\da-zA-Z]{6}$/
       if (plateNumberRegex.test(value)) {
         callback()
       } else {

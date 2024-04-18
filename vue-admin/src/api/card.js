@@ -30,6 +30,17 @@ export function addCardAPI(data) {
  */
 export function getCardDetailAPI(id) {
   return request({
-    url: `parking/card/${id}`
+    url: `/parking/card/${id}`
+  })
+}
+
+/**
+ * 编辑月卡
+ */
+export function editCardAPI(data) {
+  return request({
+    url: '/parking/card/edit',
+    method: 'PUT',
+    data
   })
 }
