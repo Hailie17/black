@@ -11,7 +11,7 @@
     </div>
     <!-- 表格区域 -->
     <div class="table">
-      <el-table style="width: 100%" :data="[]">
+      <el-table style="width: 100%" :data="list">
         <el-table-column type="index" label="序号" />
         <el-table-column label="企业名称" width="320" prop="name" />
         <el-table-column label="联系人" prop="contact" />
@@ -25,6 +25,9 @@
           </template>
         </el-table-column>
       </el-table>
+      <div class="page-container">
+        <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="params.current" :page-sizes="[10, 20, 30, 40]" :page-size="params.pageSize" layout="total, sizes, prev, pager, next, jumper" :total="total"> </el-pagination>
+      </div>
     </div>
     <div class="page-container">
       <el-pagination layout="total, prev, pager, next" />
@@ -42,7 +45,9 @@ export default {
         name: '',
         page: 1,
         pageSize: 10
-      }
+      },
+      list: [],
+      total: 0
     }
   },
   created() {
@@ -51,6 +56,17 @@ export default {
   methods: {
     async getEnterpriseLIst() {
       const res = await getEnterpriseAPI(this.params)
+      this.list = res.data.rows
+      this.total = res.data.total
+    },
+    // 分页
+    handleSizeChange(val) {
+      this.params.pageSize = val
+      this.getEnterpriseLIst()
+    },
+    handleCurrentChange(val) {
+      this.params.page = val
+      this.getEnterpriseLIst()
     }
   }
 }
