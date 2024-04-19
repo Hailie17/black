@@ -3,8 +3,8 @@
     <!-- 搜索区域 -->
     <div class="search-container">
       <div class="search-label">企业名称：</div>
-      <el-input clearable placeholder="请输入内容" class="search-main" />
-      <el-button type="primary">查询</el-button>
+      <el-input clearable placeholder="请输入内容" v-model="params.name" @clear="clearSearch" class="search-main" />
+      <el-button type="primary" @click="search">查询</el-button>
     </div>
     <div class="create-container">
       <el-button type="primary">添加企业</el-button>
@@ -59,6 +59,11 @@ export default {
       this.list = res.data.rows
       this.total = res.data.total
     },
+    search() {
+      this.params.page = 1
+      this.getEnterpriseLIst()
+    },
+    clearSearch() {},
     // 序号
     indexMethod(index) {
       return (this.params.page - 1) * this.params.pageSize + index + 1
