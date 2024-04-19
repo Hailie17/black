@@ -12,7 +12,7 @@
     <!-- 表格区域 -->
     <div class="table">
       <el-table style="width: 100%" :data="list">
-        <el-table-column type="index" label="序号" />
+        <el-table-column type="index" label="序号" :index="indexMethod" />
         <el-table-column label="企业名称" width="320" prop="name" />
         <el-table-column label="联系人" prop="contact" />
         <el-table-column label="联系电话" prop="contactNumber" />
@@ -58,6 +58,10 @@ export default {
       const res = await getEnterpriseAPI(this.params)
       this.list = res.data.rows
       this.total = res.data.total
+    },
+    // 序号
+    indexMethod(index) {
+      return (this.params.page - 1) * this.params.pageSize + index + 1
     },
     // 分页
     handleSizeChange(val) {
