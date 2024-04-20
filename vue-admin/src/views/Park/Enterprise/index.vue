@@ -3,11 +3,11 @@
     <!-- 搜索区域 -->
     <div class="search-container">
       <div class="search-label">企业名称：</div>
-      <el-input clearable placeholder="请输入内容" v-model="params.name" @clear="clearSearch" class="search-main" />
+      <el-input clearable placeholder="请输入内容" v-model="params.name" @clear="search" class="search-main" />
       <el-button type="primary" @click="search">查询</el-button>
     </div>
     <div class="create-container">
-      <el-button type="primary">添加企业</el-button>
+      <el-button type="primary" @click="add">添加企业</el-button>
     </div>
     <!-- 表格区域 -->
     <div class="table">
@@ -63,7 +63,6 @@ export default {
       this.params.page = 1
       this.getEnterpriseLIst()
     },
-    clearSearch() {},
     // 序号
     indexMethod(index) {
       return (this.params.page - 1) * this.params.pageSize + index + 1
@@ -76,6 +75,9 @@ export default {
     handleCurrentChange(val) {
       this.params.page = val
       this.getEnterpriseLIst()
+    },
+    add() {
+      this.$router.push('/park/addEnterprise')
     }
   }
 }
