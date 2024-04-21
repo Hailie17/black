@@ -34,7 +34,7 @@
               <el-input v-model="addForm.contactNumber" />
             </el-form-item>
             <el-form-item label="营业执照" prop="name">
-              <el-upload class="upload-demo" action="" :http-request="uploadImg">
+              <el-upload class="upload-demo" action="" :http-request="uploadImg" :before-upload="beforeUpload">
                 <el-button size="small" type="primary">点击上传</el-button>
                 <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
               </el-upload>
@@ -85,7 +85,19 @@ export default {
       formData.append('file', file)
       formData.append('type', 1)
       const res = await uploadFiles(formData)
-      console.log(res, 'res')
+      this.addForm.businessLicenseUrl = res.data.url
+      this.addForm.businessLicenseId = res.data.id
+    },
+    beforeUpload(file) {
+      const imageType = ['image/png']
+      if (!imageType.includes(file.type)) {
+        this.$message.warning('图片格式不正确')
+        return
+      }
+      if (file.size / 1024 / 1024 > 5) {
+        this.$message.warning('图片大小不能超过5M')
+        return
+      }
     }
   }
 }
