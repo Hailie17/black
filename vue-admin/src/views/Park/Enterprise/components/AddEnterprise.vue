@@ -12,28 +12,28 @@
       <div class="form-container">
         <div class="title">企业信息</div>
         <div class="form">
-          <el-form ref="ruleForm" label-width="100px">
+          <el-form ref="ruleForm" :model="addForm" :rules="rules" label-width="100px">
             <el-form-item label="企业名称" prop="name">
               <el-input v-model="addForm.name" />
             </el-form-item>
-            <el-form-item label="法人" prop="name">
+            <el-form-item label="法人" prop="legalPerson">
               <el-input v-model="addForm.legalPerson" />
             </el-form-item>
-            <el-form-item label="注册地址" prop="name">
+            <el-form-item label="注册地址" prop="registeredAddress">
               <el-input v-model="addForm.registeredAddress" />
             </el-form-item>
-            <el-form-item label="所在行业" prop="name">
+            <el-form-item label="所在行业" prop="industryCode">
               <el-select v-model="addForm.industryCode">
                 <el-option v-for="item in list" :key="item.industryCode" :label="item.industryName" :value="item.industryCode"></el-option>
               </el-select>
             </el-form-item>
-            <el-form-item label="企业联系人" prop="name">
+            <el-form-item label="企业联系人" prop="contact">
               <el-input v-model="addForm.contact" />
             </el-form-item>
-            <el-form-item label="联系电话" prop="name">
+            <el-form-item label="联系电话" prop="contactNumber">
               <el-input v-model="addForm.contactNumber" />
             </el-form-item>
-            <el-form-item label="营业执照" prop="name">
+            <el-form-item label="营业执照" prop="businessLicenseUrl">
               <el-upload class="upload-demo" action="" :http-request="uploadImg" :before-upload="beforeUpload">
                 <el-button size="small" type="primary">点击上传</el-button>
                 <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
@@ -69,7 +69,14 @@ export default {
         businessLicenseUrl: '', // 营业执照url
         businessLicenseId: '' // 营业执照id
       },
-      list: []
+      list: [],
+      rules: {
+        name: [{ required: true, message: '请输入企业名称', trigger: 'blur' }],
+        legalPerson: [{ required: true, message: '请输入企业法人', trigger: 'blur' }],
+        registeredAddress: [{ required: true, message: '请输入企业注册地址', trigger: 'blur' }],
+        industryCode: [{ required: true, message: '请输入所在行业', trigger: 'blur' }],
+        contact: [{ required: true, message: '请输入企业联系人', trigger: 'blur' }]
+      }
     }
   },
   created() {
@@ -89,7 +96,7 @@ export default {
       this.addForm.businessLicenseId = res.data.id
     },
     beforeUpload(file) {
-      const imageType = ['image/png']
+      const imageType = ['image/png', 'image/jpg']
       if (!imageType.includes(file.type)) {
         this.$message.warning('图片格式不正确')
         return
