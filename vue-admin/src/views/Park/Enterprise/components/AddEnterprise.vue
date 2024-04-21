@@ -33,7 +33,12 @@
             <el-form-item label="联系电话" prop="name">
               <el-input v-model="addForm.contactNumber" />
             </el-form-item>
-            <el-form-item label="营业执照" prop="name" />
+            <el-form-item label="营业执照" prop="name">
+              <el-upload class="upload-demo" action="" :http-request="uploadImg">
+                <el-button size="small" type="primary">点击上传</el-button>
+                <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
+              </el-upload>
+            </el-form-item>
           </el-form>
         </div>
       </div>
@@ -49,6 +54,7 @@
 
 <script>
 import { getEnterpriseListAPI } from '@/api/enterprise'
+import { uploadFiles } from '@/api/common'
 
 export default {
   data() {
@@ -73,6 +79,13 @@ export default {
     async getEnterpriseList() {
       const res = await getEnterpriseListAPI()
       this.list = res.data
+    },
+    async uploadImg({ file }) {
+      const formData = new FormData()
+      formData.append('file', file)
+      formData.append('type', 1)
+      const res = await uploadFiles(formData)
+      console.log(res, 'res')
     }
   }
 }
