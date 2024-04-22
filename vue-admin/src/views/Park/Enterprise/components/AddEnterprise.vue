@@ -46,7 +46,7 @@
     <footer class="add-footer">
       <div class="btn-container">
         <el-button>重置</el-button>
-        <el-button type="primary">确定</el-button>
+        <el-button type="primary" @click="submit">确定</el-button>
       </div>
     </footer>
   </div>
@@ -92,6 +92,12 @@ export default {
       const res = await getEnterpriseListAPI()
       this.list = res.data
     },
+    submit() {
+      this.$refs.ruleForm.validate(valid => {
+        if (!valid) return
+        console.log('ky')
+      })
+    },
     async uploadImg({ file }) {
       const formData = new FormData()
       formData.append('file', file)
@@ -99,9 +105,10 @@ export default {
       const res = await uploadFiles(formData)
       this.addForm.businessLicenseUrl = res.data.url
       this.addForm.businessLicenseId = res.data.id
+      this.$refs.ruleForm.validateField('businessLicenseUrl')
     },
     beforeUpload(file) {
-      const imageType = ['image/png', 'image/jpg']
+      const imageType = ['image/png', 'image/jpg', 'image/jpeg']
       if (!imageType.includes(file.type)) {
         this.$message.warning('图片格式不正确')
         return
