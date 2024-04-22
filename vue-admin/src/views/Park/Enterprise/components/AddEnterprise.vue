@@ -75,7 +75,12 @@ export default {
         legalPerson: [{ required: true, message: '请输入企业法人', trigger: 'blur' }],
         registeredAddress: [{ required: true, message: '请输入企业注册地址', trigger: 'blur' }],
         industryCode: [{ required: true, message: '请输入所在行业', trigger: 'blur' }],
-        contact: [{ required: true, message: '请输入企业联系人', trigger: 'blur' }]
+        contact: [{ required: true, message: '请输入企业联系人', trigger: 'blur' }],
+        contactNumber: [
+          { required: true, message: '请输入联系人电话', trigger: 'blur' },
+          { pattern: /^1[3-9]\d{9}$/, message: '请输入正确的联系人电话', trigger: 'blur' }
+        ],
+        businessLicenseUrl: [{ required: true, message: '请输入营业执照', trigger: 'blur' }]
       }
     }
   },
