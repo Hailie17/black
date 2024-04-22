@@ -53,7 +53,7 @@
 </template>
 
 <script>
-import { getEnterpriseListAPI } from '@/api/enterprise'
+import { getEnterpriseListAPI, addEnterpriseAPI } from '@/api/enterprise'
 import { uploadFiles } from '@/api/common'
 
 export default {
@@ -93,9 +93,11 @@ export default {
       this.list = res.data
     },
     submit() {
-      this.$refs.ruleForm.validate(valid => {
+      this.$refs.ruleForm.validate(async valid => {
         if (!valid) return
-        console.log('ky')
+        await addEnterpriseAPI(this.addForm)
+        this.$message.success('添加成功')
+        this.$router.go(-1)
       })
     },
     async uploadImg({ file }) {

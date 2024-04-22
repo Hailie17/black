@@ -22,3 +22,14 @@ export function getEnterpriseListAPI() {
     url: '/park/industry'
   })
 }
+
+/**
+ * 添加企业
+ */
+export function addEnterpriseAPI(data) {
+  return request({
+    url: '/park/enterprise',
+    method: 'POST',
+    data
+  })
+}
