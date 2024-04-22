@@ -54,7 +54,7 @@
 </template>
 
 <script>
-import { getEnterpriseListAPI, addEnterpriseAPI, getEnterpriseInfoAPI } from '@/api/enterprise'
+import { getEnterpriseListAPI, addEnterpriseAPI, getEnterpriseInfoAPI, editEnterpriseAPI } from '@/api/enterprise'
 import { uploadFiles } from '@/api/common'
 
 export default {
@@ -108,8 +108,16 @@ export default {
     submit() {
       this.$refs.ruleForm.validate(async valid => {
         if (!valid) return
-        await addEnterpriseAPI(this.addForm)
-        this.$message.success('添加成功')
+        if (this.id) {
+          delete this.addForm.businessLicenseName
+          delete this.addForm.industryName
+          delete this.addForm.rent
+          await editEnterpriseAPI(this.addForm)
+          this.$message.success('修改成功')
+        } else {
+          await addEnterpriseAPI(this.addForm)
+          this.$message.success('添加成功')
+        }
         this.$router.go(-1)
       })
     },

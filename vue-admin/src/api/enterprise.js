@@ -41,3 +41,14 @@ export function getEnterpriseInfoAPI(id) {
     url: `/park/enterprise/${id}`
   })
 }
+
+/**
+ * 编辑企业信息
+ */
+export function editEnterpriseAPI(data) {
+  return request({
+    url: '/park/enterprise',
+    method: 'PUT',
+    data
+  })
+}
