@@ -20,7 +20,7 @@
           <template #default="scope">
             <el-button size="mini" type="text">添加合同</el-button>
             <el-button size="mini" type="text">查看</el-button>
-            <el-button size="mini" type="text">编辑</el-button>
+            <el-button size="mini" type="text" @click="toEdit(scope.row.id)">编辑</el-button>
             <el-button size="mini" type="text">删除</el-button>
           </template>
         </el-table-column>
@@ -62,6 +62,15 @@ export default {
     search() {
       this.params.page = 1
       this.getEnterpriseLIst()
+    },
+    // 编辑
+    toEdit(id) {
+      this.$router.push({
+        path: '/park/addEnterprise',
+        query: {
+          id
+        }
+      })
     },
     // 序号
     indexMethod(index) {

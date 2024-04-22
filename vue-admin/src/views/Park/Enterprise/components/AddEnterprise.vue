@@ -4,13 +4,13 @@
       <div class="left">
         <span class="arrow" @click="$router.back()"><i class="el-icon-arrow-left" />返回</span>
         <span>|</span>
-        <span>添加企业</span>
+        <span>{{ id ? '编辑企业' : '添加企业' }}</span>
       </div>
       <div class="right">黑马程序员</div>
     </header>
     <main class="add-main">
       <div class="form-container">
-        <div class="title">企业信息</div>
+        <div class="title">{{ id ? '编辑企业' : '添加企业' }}</div>
         <div class="form">
           <el-form ref="ruleForm" :model="addForm" :rules="rules" label-width="100px">
             <el-form-item label="企业名称" prop="name">
@@ -86,6 +86,11 @@ export default {
   },
   created() {
     this.getEnterpriseList()
+  },
+  computed: {
+    id() {
+      return this.$route.query.id
+    }
   },
   methods: {
     async getEnterpriseList() {
