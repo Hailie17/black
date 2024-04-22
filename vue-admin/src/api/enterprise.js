@@ -33,3 +33,11 @@ export function addEnterpriseAPI(data) {
     data
   })
 }
+/**
+ * 企业详情
+ */
+export function getEnterpriseInfoAPI(id) {
+  return request({
+    url: `/park/enterprise/${id}`
+  })
+}
