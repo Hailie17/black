@@ -66,7 +66,7 @@
 </template>
 
 <script>
-import { getEnterpriseAPI, deleteEnterpriseAPI } from '@/api/enterprise'
+import { getEnterpriseAPI, deleteEnterpriseAPI, getBuildingListAPI } from '@/api/enterprise'
 export default {
   name: 'Enterprise',
   data() {
@@ -147,8 +147,10 @@ export default {
       this.$router.push('/park/addEnterprise')
     },
     // 添加合同
-    addContract() {
+    async addContract() {
       this.rentDialogVisiable = true
+      const res = await getBuildingListAPI()
+      this.buildingList = res.data
     },
     // 关闭添加合同弹框
     closeDialog() {
