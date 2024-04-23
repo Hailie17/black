@@ -67,6 +67,7 @@
 
 <script>
 import { getEnterpriseAPI, deleteEnterpriseAPI, getBuildingListAPI } from '@/api/enterprise'
+import { uploadFiles } from '@/api/common'
 export default {
   name: 'Enterprise',
   data() {
@@ -151,6 +152,15 @@ export default {
       this.rentDialogVisiable = true
       const res = await getBuildingListAPI()
       this.buildingList = res.data
+    },
+    // 上传合同文件
+    async upload({ file }) {
+      const formData = new FormData()
+      formData.append('file', file)
+      formData.append('type', 1)
+      const res = await uploadFiles(formData)
+      this.rentForm.contractId = res.data.id
+      this.rentForm.contractUrl = res.data.url
     },
     // 关闭添加合同弹框
     closeDialog() {
