@@ -61,6 +61,10 @@
           </el-form-item>
         </el-form>
       </div>
+      <template #footer>
+        <el-button @click="rentDialogVisiable = false">取 消</el-button>
+        <el-button type="primary" @click="confirmAdd">确 定</el-button>
+      </template>
     </el-dialog>
   </div>
 </template>
@@ -100,6 +104,11 @@ export default {
     this.getEnterpriseLIst()
   },
   methods: {
+    confirmAdd() {
+      this.$refs.addForm.validate(valid => {
+        if (!valid) return
+      })
+    },
     async getEnterpriseLIst() {
       const res = await getEnterpriseAPI(this.params)
       this.list = res.data.rows
@@ -177,6 +186,7 @@ export default {
       const res = await uploadFiles(formData)
       this.rentForm.contractId = res.data.id
       this.rentForm.contractUrl = res.data.url
+      this.$refs.rentForm.validateField('contractId')
     },
     // 关闭添加合同弹框
     closeDialog() {
