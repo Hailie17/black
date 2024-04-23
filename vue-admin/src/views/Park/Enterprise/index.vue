@@ -34,11 +34,33 @@
     </div>
     <!-- 添加合同弹框 -->
     <el-dialog title="添加合同" :visible.sync="rentDialogVisiable" width="580px" @close="closeDialog">
-      <div class="form-container"></div>
-      <template #footer>
-        <el-button size="mini" @click="closeDialog">取消</el-button>
-        <el-button size="mini" type="primary">确定</el-button>
-      </template>
+      <div class="form-container">
+        <el-form ref="addForm" :model="rentForm" :rules="rentRules" label-position="top">
+          <el-form-item label="租赁楼宇" prop="buildingId">
+            <el-select v-model="rentForm.buildingId" placeholder="请选择">
+              <el-option v-for="item in buildingList" :key="item.id" :label="item.name" :value="item.id" />
+            </el-select>
+          </el-form-item>
+          <el-form-item label="租赁起止日期" prop="rentTime">
+            <el-date-picker v-model="rentForm.rentTime" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" value-format="yyyy-MM-dd" />
+          </el-form-item>
+          <el-form-item label="租赁合同" prop="contractId">
+            <!--
+              上传实现流程：
+                1. el-upload 打开本地文件 并且校验这个文件是否符合要求 - File
+                2. :http-request = 'upload'
+                3. 按照接口的要求格式 得到类型为FormData的对象  new FormData()
+                4. 按照要求往formData中添加字段数据 fd.append('字段名', '字段值')
+                5. 调用上传接口
+                6. 拿到返回的文件地址和其他有用的信息id 存入data中的响应式数据的位置 将来提交表单
+             -->
+            <el-upload ref="uploadRef" action="#" :http-request="upload">
+              <el-button size="small" type="primary" plain>上传合同文件</el-button>
+              <div slot="tip" class="el-upload__tip">支持扩展名：.doc .docx .pdf, 文件大小不超过5M</div>
+            </el-upload>
+          </el-form-item>
+        </el-form>
+      </div>
     </el-dialog>
   </div>
 </template>
@@ -56,7 +78,21 @@ export default {
       },
       list: [],
       total: 0,
-      rentDialogVisiable: false
+      rentDialogVisiable: false,
+      rentForm: {
+        buildingId: null, // 楼宇id
+        contractId: null, // 合同id
+        contractUrl: '', // 合同Url
+        enterpriseId: null, // 企业名称
+        type: 0, // 合同类型
+        rentTime: [] // 合同时间
+      },
+      rentRules: {
+        buildingId: [{ required: true, message: '请选择楼宇', trigger: 'change' }],
+        rentTime: [{ required: true, message: '请选择租赁日期', trigger: 'change' }],
+        contractId: [{ required: true, message: '请上传合同文件' }]
+      },
+      buildingList: [] // 楼宇列表
     }
   },
   created() {
