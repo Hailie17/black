@@ -54,7 +54,7 @@
                 5. 调用上传接口
                 6. 拿到返回的文件地址和其他有用的信息id 存入data中的响应式数据的位置 将来提交表单
              -->
-            <el-upload ref="uploadRef" action="#" :http-request="upload">
+            <el-upload ref="uploadRef" action="#" :http-request="upload" :before-upload="beforeUpload" :limit="1" :on-exceed="onExceed">
               <el-button size="small" type="primary" plain>上传合同文件</el-button>
               <div slot="tip" class="el-upload__tip">支持扩展名：.doc .docx .pdf, 文件大小不超过5M</div>
             </el-upload>
@@ -153,11 +153,27 @@ export default {
       const res = await getBuildingListAPI()
       this.buildingList = res.data
     },
+    // 文件上传前校验
+    beforeUpload(file) {
+      const fileType = ['application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'application/pdf']
+      const result = fileType.includes(file.type)
+      const isLT5M = file.size / 1024 / 1024 < 5
+      if (result && isLT5M) {
+        return true
+      } else {
+        this.$message.error('上传文件错误，请重新选择文件')
+        return false
+      }
+    },
+    // 文件超出个数限制
+    onExceed() {
+      this.$message.warning('只能上传一个文件')
+    },
     // 上传合同文件
     async upload({ file }) {
       const formData = new FormData()
       formData.append('file', file)
-      formData.append('type', 1)
+      formData.append('type', 2)
       const res = await uploadFiles(formData)
       this.rentForm.contractId = res.data.id
       this.rentForm.contractUrl = res.data.url
