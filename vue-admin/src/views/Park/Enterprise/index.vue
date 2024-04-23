@@ -18,7 +18,7 @@
         <el-table-column label="联系电话" prop="contactNumber" />
         <el-table-column label="操作">
           <template #default="scope">
-            <el-button size="mini" type="text" @click="addContract">添加合同</el-button>
+            <el-button size="mini" type="text" @click="addContract(scope.row.id)">添加合同</el-button>
             <el-button size="mini" type="text">查看</el-button>
             <el-button size="mini" type="text" @click="toEdit(scope.row.id)">编辑</el-button>
             <el-button size="mini" type="text" @click="deleteEnterprise(scope.row.id)">删除</el-button>
@@ -70,7 +70,7 @@
 </template>
 
 <script>
-import { getEnterpriseAPI, deleteEnterpriseAPI, getBuildingListAPI } from '@/api/enterprise'
+import { getEnterpriseAPI, deleteEnterpriseAPI, getBuildingListAPI, addRendAPI } from '@/api/enterprise'
 import { uploadFiles } from '@/api/common'
 export default {
   name: 'Enterprise',
@@ -105,8 +105,16 @@ export default {
   },
   methods: {
     confirmAdd() {
-      this.$refs.addForm.validate(valid => {
+      this.$refs.addForm.validate(async valid => {
         if (!valid) return
+        const [startTime, endTime] = this.rentForm.rentTime
+        this.rentForm.startTime = startTime
+        this.rentForm.endTime = endTime
+        delete this.rentForm.rentTime
+        await addRendAPI(this.rentForm)
+        this.$message.success('添加成功')
+        this.getEnterpriseLIst()
+        this.closeDialog()
       })
     },
     async getEnterpriseLIst() {
@@ -157,7 +165,8 @@ export default {
       this.$router.push('/park/addEnterprise')
     },
     // 添加合同
-    async addContract() {
+    async addContract(id) {
+      this.rentForm.enterpriseId = id
       this.rentDialogVisiable = true
       const res = await getBuildingListAPI()
       this.buildingList = res.data
@@ -196,6 +205,16 @@ export default {
     // 关闭添加合同弹框
     closeDialog() {
       this.rentDialogVisiable = false
+      this.$refs.addForm.resetFields()
+      ;(this.rentForm = {
+        buildingId: null, // 楼宇id
+        contractId: null, // 合同id
+        contractUrl: '', // 合同Url
+        enterpriseId: null, // 企业名称
+        type: 0, // 合同类型
+        rentTime: [] // 合同时间
+      }),
+        this.$refs.uploadRef.clearFiles()
     }
   }
 }
