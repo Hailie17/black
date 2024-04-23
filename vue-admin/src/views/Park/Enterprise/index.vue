@@ -18,7 +18,7 @@
         <el-table-column label="联系电话" prop="contactNumber" />
         <el-table-column label="操作">
           <template #default="scope">
-            <el-button size="mini" type="text">添加合同</el-button>
+            <el-button size="mini" type="text" @click="addContract">添加合同</el-button>
             <el-button size="mini" type="text">查看</el-button>
             <el-button size="mini" type="text" @click="toEdit(scope.row.id)">编辑</el-button>
             <el-button size="mini" type="text" @click="deleteEnterprise(scope.row.id)">删除</el-button>
@@ -32,6 +32,14 @@
     <div class="page-container">
       <el-pagination layout="total, prev, pager, next" />
     </div>
+    <!-- 添加合同弹框 -->
+    <el-dialog title="添加合同" :visible.sync="rentDialogVisiable" width="580px" @close="closeDialog">
+      <div class="form-container"></div>
+      <template #footer>
+        <el-button size="mini" @click="closeDialog">取消</el-button>
+        <el-button size="mini" type="primary">确定</el-button>
+      </template>
+    </el-dialog>
   </div>
 </template>
 
@@ -47,7 +55,8 @@ export default {
         pageSize: 10
       },
       list: [],
-      total: 0
+      total: 0,
+      rentDialogVisiable: false
     }
   },
   created() {
@@ -97,8 +106,17 @@ export default {
       this.params.page = val
       this.getEnterpriseLIst()
     },
+    // 添加
     add() {
       this.$router.push('/park/addEnterprise')
+    },
+    // 添加合同
+    addContract() {
+      this.rentDialogVisiable = true
+    },
+    // 关闭添加合同弹框
+    closeDialog() {
+      this.rentDialogVisiable = false
     }
   }
 }
