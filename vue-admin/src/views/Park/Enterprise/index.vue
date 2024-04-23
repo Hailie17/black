@@ -54,7 +54,7 @@
                 5. 调用上传接口
                 6. 拿到返回的文件地址和其他有用的信息id 存入data中的响应式数据的位置 将来提交表单
              -->
-            <el-upload ref="uploadRef" action="#" :http-request="upload" :before-upload="beforeUpload" :limit="1" :on-exceed="onExceed">
+            <el-upload ref="uploadRef" action="#" :http-request="upload" :before-upload="beforeUpload" :limit="1" :on-exceed="onExceed" :on-remove="onRemove">
               <el-button size="small" type="primary" plain>上传合同文件</el-button>
               <div slot="tip" class="el-upload__tip">支持扩展名：.doc .docx .pdf, 文件大小不超过5M</div>
             </el-upload>
@@ -177,6 +177,11 @@ export default {
     // 文件超出个数限制
     onExceed() {
       this.$message.warning('只能上传一个文件')
+    },
+    onRemove() {
+      this.rentForm.contractId = null
+      this.rentForm.contractUrl = null
+      this.$refs.addForm.validateField('contractId')
     },
     // 上传合同文件
     async upload({ file }) {
