@@ -12,6 +12,21 @@
     <!-- 表格区域 -->
     <div class="table">
       <el-table style="width: 100%" :data="list">
+        <el-table-column type="expand">
+          <template slot-scope="props">
+            <el-table>
+              <el-table-column label="租赁楼宇" width="320" prop="buildingName" />
+              <el-table-column label="租赁起始时间" prop="startTime" />
+              <el-table-column label="合同状态" prop="status" />
+              <el-table-column label="操作" width="180">
+                <template #default="scope">
+                  <el-button size="mini" type="text">退租</el-button>
+                  <el-button size="mini" type="text">删除</el-button>
+                </template>
+              </el-table-column>
+            </el-table>
+          </template>
+        </el-table-column>
         <el-table-column type="index" label="序号" :index="indexMethod" />
         <el-table-column label="企业名称" width="320" prop="name" />
         <el-table-column label="联系人" prop="contact" />
