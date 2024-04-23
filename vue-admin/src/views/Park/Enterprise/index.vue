@@ -186,7 +186,7 @@ export default {
       const res = await uploadFiles(formData)
       this.rentForm.contractId = res.data.id
       this.rentForm.contractUrl = res.data.url
-      this.$refs.rentForm.validateField('contractId')
+      this.$refs.addForm.validateField('contractId')
     },
     // 关闭添加合同弹框
     closeDialog() {
