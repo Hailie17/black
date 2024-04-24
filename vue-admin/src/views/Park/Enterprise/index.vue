@@ -121,8 +121,10 @@ export default {
   methods: {
     // 展开行
     async expandChange(row, expandRows) {
+      // 判断当前点击是展开还是关闭
+      const isInclude = expandRows.find(item => item.id === row.id)
+      if (!isInclude) return
       const res = await getEnterpriseRentAPI(row.id)
-      console.log(res, 'res')
     },
     confirmAdd() {
       this.$refs.addForm.validate(async valid => {
