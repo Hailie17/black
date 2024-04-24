@@ -13,11 +13,17 @@
     <div class="table">
       <el-table style="width: 100%" :data="list" @expand-change="expandChange">
         <el-table-column type="expand">
-          <template slot-scope="props">
-            <el-table>
+          <template #default="scope">
+            <el-table :data="scope.row.rentList">
               <el-table-column label="租赁楼宇" width="320" prop="buildingName" />
-              <el-table-column label="租赁起始时间" prop="startTime" />
-              <el-table-column label="合同状态" prop="status" />
+              <el-table-column label="租赁起始时间" prop="startTime">
+                <template #default="rentObj"> {{ rentObj.row.startTime }} to {{ rentObj.row.endTime }} </template>
+              </el-table-column>
+              <el-table-column label="合同状态" prop="status">
+                <template #default="rentObj">
+                  {{ formatStatus(rentObj.row.status) }}
+                </template>
+              </el-table-column>
               <el-table-column label="操作" width="180">
                 <template #default="scope">
                   <el-button size="mini" type="text">退租</el-button>
@@ -119,12 +125,23 @@ export default {
     this.getEnterpriseLIst()
   },
   methods: {
+    // 格式化状态
+    formatStatus(status) {
+      const Map = {
+        0: '待生效',
+        1: '生效中',
+        2: '已到期',
+        3: '已退租'
+      }
+      return Map[status]
+    },
     // 展开行
     async expandChange(row, expandRows) {
       // 判断当前点击是展开还是关闭
       const isInclude = expandRows.find(item => item.id === row.id)
       if (!isInclude) return
       const res = await getEnterpriseRentAPI(row.id)
+      row.rentList = res.data
     },
     confirmAdd() {
       this.$refs.addForm.validate(async valid => {
