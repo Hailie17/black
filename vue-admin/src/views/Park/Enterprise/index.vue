@@ -11,7 +11,7 @@
     </div>
     <!-- 表格区域 -->
     <div class="table">
-      <el-table style="width: 100%" :data="list">
+      <el-table style="width: 100%" :data="list" @expand-change="expandChange">
         <el-table-column type="expand">
           <template slot-scope="props">
             <el-table>
@@ -85,7 +85,7 @@
 </template>
 
 <script>
-import { getEnterpriseAPI, deleteEnterpriseAPI, getBuildingListAPI, addRendAPI } from '@/api/enterprise'
+import { getEnterpriseAPI, deleteEnterpriseAPI, getBuildingListAPI, addRendAPI, getEnterpriseRentAPI } from '@/api/enterprise'
 import { uploadFiles } from '@/api/common'
 export default {
   name: 'Enterprise',
@@ -119,6 +119,11 @@ export default {
     this.getEnterpriseLIst()
   },
   methods: {
+    // 展开行
+    async expandChange(row, expandRows) {
+      const res = await getEnterpriseRentAPI(row.id)
+      console.log(res, 'res')
+    },
     confirmAdd() {
       this.$refs.addForm.validate(async valid => {
         if (!valid) return

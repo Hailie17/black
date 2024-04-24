@@ -82,3 +82,12 @@ export function addRendAPI(data) {
     data
   })
 }
+
+/**
+ * 租赁信息列表
+ */
+export function getEnterpriseRentAPI(id) {
+  return request({
+    url: `/park/enterprise/rent/${id}`
+  })
+}
