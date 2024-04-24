@@ -21,7 +21,9 @@
               </el-table-column>
               <el-table-column label="合同状态" prop="status">
                 <template #default="rentObj">
-                  {{ formatStatus(rentObj.row.status) }}
+                  <el-tag :type="formatInfoType(rentObj.row.status)">
+                    {{ formatStatus(rentObj.row.status) }}
+                  </el-tag>
                 </template>
               </el-table-column>
               <el-table-column label="操作" width="180">
@@ -125,6 +127,16 @@ export default {
     this.getEnterpriseLIst()
   },
   methods: {
+    formatInfoType(status) {
+      const MAP = {
+        0: 'warning',
+        1: 'success',
+        2: 'info',
+        3: 'danger'
+      }
+      // return 格式化之后的中文显示
+      return MAP[status]
+    },
     // 格式化状态
     formatStatus(status) {
       const Map = {
