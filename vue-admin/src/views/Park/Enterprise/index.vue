@@ -170,7 +170,13 @@ export default {
     },
     async getEnterpriseLIst() {
       const res = await getEnterpriseAPI(this.params)
-      this.list = res.data.rows
+      // 给列表的每一个数据添加额外属性
+      this.list = res.data.rows.map(item => {
+        return {
+          ...item,
+          rentList: []
+        }
+      })
       this.total = res.data.total
     },
     search() {
