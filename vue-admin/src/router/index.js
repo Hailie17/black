@@ -57,7 +57,7 @@ export const routes = [
     component: () => import('@/views/Park/Enterprise/components/AddEnterprise.vue')
   },
   {
-    path: '/exterpriseDetail',
+    path: '/exterpriseDetail/:id',
     component: () => import('@/views/Park/Enterprise/components/enterprise.vue')
   },
   {

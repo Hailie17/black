@@ -7,7 +7,7 @@
       <div class="form-container">
         <div class="title">租赁记录</div>
         <div class="table-container">
-          <el-table :data="[]" style="width: 100%" border>
+          <el-table :data="data" style="width: 100%" border>
             <el-table-column prop="index" label="序号" width="50" />
             <el-table-column prop="name" label="租赁楼宇" width="180" />
             <el-table-column label="租赁起止时间" width="280">
@@ -34,9 +34,21 @@
 </template>
 
 <script>
+import { getEnterpriseInfoAPI } from '@/api/enterprise'
 export default {
   data() {
-    return {}
+    return {
+      list: []
+    }
+  },
+  created() {
+    thisgetEnterpriseInfo()
+  },
+  methods: {
+    async getEnterpriseInfo() {
+      const res = await getEnterpriseInfoAPI(this.$route.params.id)
+      this.list = res.data.rent
+    }
   }
 }
 </script>
