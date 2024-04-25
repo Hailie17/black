@@ -28,7 +28,7 @@
               </el-table-column>
               <el-table-column label="操作" width="180">
                 <template #default="scope">
-                  <el-button size="mini" type="text">退租</el-button>
+                  <el-button size="mini" type="text" @click="rentingOut(scope.row.id)">退租</el-button>
                   <el-button size="mini" type="text">删除</el-button>
                 </template>
               </el-table-column>
@@ -93,7 +93,7 @@
 </template>
 
 <script>
-import { getEnterpriseAPI, deleteEnterpriseAPI, getBuildingListAPI, addRendAPI, getEnterpriseRentAPI } from '@/api/enterprise'
+import { rentingOutAPI, getEnterpriseAPI, deleteEnterpriseAPI, getBuildingListAPI, addRendAPI, getEnterpriseRentAPI } from '@/api/enterprise'
 import { uploadFiles } from '@/api/common'
 export default {
   name: 'Enterprise',
@@ -127,6 +127,14 @@ export default {
     this.getEnterpriseLIst()
   },
   methods: {
+    // 退租
+    rentingOut(id) {
+      this.$confirm('确认退租该企业吗?').then(async () => {
+        await rentingOutAPI(id)
+        this.$message.success('退租成功')
+        this.getEnterpriseLIst()
+      })
+    },
     formatInfoType(status) {
       const MAP = {
         0: 'warning',

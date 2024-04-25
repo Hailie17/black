@@ -91,3 +91,13 @@ export function getEnterpriseRentAPI(id) {
     url: `/park/enterprise/rent/${id}`
   })
 }
+
+/**
+ * 退租
+ */
+export function rentingOutAPI(id) {
+  return request({
+    url: `/park/enterprise/rent/${id}`,
+    method: 'PUT'
+  })
+}
