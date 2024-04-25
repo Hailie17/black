@@ -42,7 +42,7 @@
         <el-table-column label="操作">
           <template #default="scope">
             <el-button size="mini" type="text" @click="addContract(scope.row.id)">添加合同</el-button>
-            <el-button size="mini" type="text">查看</el-button>
+            <el-button size="mini" type="text" @click="toDetail(scope.row.id)">查看</el-button>
             <el-button size="mini" type="text" @click="toEdit(scope.row.id)">编辑</el-button>
             <el-button size="mini" type="text" @click="deleteEnterprise(scope.row.id)">删除</el-button>
           </template>
@@ -127,6 +127,10 @@ export default {
     this.getEnterpriseLIst()
   },
   methods: {
+    // 详情
+    toDetail(id) {
+      this.$router.push('/exterpriseDetail/' + id)
+    },
     // 退租
     rentingOut(id) {
       this.$confirm('确认退租该企业吗?').then(async () => {

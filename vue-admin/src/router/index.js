@@ -57,6 +57,10 @@ export const routes = [
     component: () => import('@/views/Park/Enterprise/components/AddEnterprise.vue')
   },
   {
+    path: '/exterpriseDetail',
+    component: () => import('@/views/Park/Enterprise/components/enterprise.vue')
+  },
+  {
     path: '/parking',
     component: Layout,
     permission: 'parking',
