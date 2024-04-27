@@ -16,7 +16,7 @@
             <el-table-column label="租赁合同(点击预览)">
               <template #default="{ row }">
                 <el-button type="text">
-                  {{ row.contractName }}
+                  <a :href="`${previewURL}?src=${row.contractUrl}`" target="_blank"> {{ row.contractName }}</a>
                 </el-button>
               </template>
             </el-table-column>
