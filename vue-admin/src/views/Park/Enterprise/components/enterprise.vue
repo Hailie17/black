@@ -23,7 +23,7 @@
             <el-table-column prop="createTime" label="录入时间" />
             <el-table-column prop="address" label="操作">
               <template #default="{ row }">
-                <el-button type="text">合同下载</el-button>
+                <a :href="row.contractUrl">合同下载</a>
               </template>
             </el-table-column>
           </el-table>
