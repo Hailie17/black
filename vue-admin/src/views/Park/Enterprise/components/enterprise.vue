@@ -49,6 +49,8 @@ export default {
       const res = await getEnterpriseInfoAPI(this.$route.params.id)
       this.list = res.data.rent
     }
+
+    // 1
   }
 }
 </script>
