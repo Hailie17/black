@@ -54,18 +54,26 @@ export default {
   },
   methods: {
     // 导出excel
-    exportToExcel() {
+    async exportToExcel() {
+      const res = await getRuleListAPI(this.params)
+      const ruleHeaderKey = ['ruleNumber', 'ruleName', 'freeDuration']
+      const list = res.data.rows.map(item => {
+        const obj = {}
+        ruleHeaderKey.forEach(key => {
+          obj[key] = item[key]
+        })
+        return obj
+      })
+      // 标头
+      const ruleHeaderValue = ['计费规则编号', '计费规则名称', '免费时长(分钟)']
       // 创建一个新的工作簿
       const workbook = utils.book_new()
       // 创建一个工作表 要求一个对象数组格式
-      const worksheet = utils.json_to_sheet([
-        { name: '张三', age: 18 },
-        { name: '李四', age: 28 }
-      ])
+      const worksheet = utils.json_to_sheet(list)
       // 把工作表添加到工作簿  Data为工作表名称
       utils.book_append_sheet(workbook, worksheet, 'Data')
       // 改写表头
-      utils.sheet_add_aoa(worksheet, [['姓名', '年龄']], { origin: 'A1' })
+      utils.sheet_add_aoa(worksheet, [ruleHeaderValue], { origin: 'A1' })
       // 导出方法进行导出
       writeFileXLSX(workbook, 'SheetJSVueAoO.xlsx')
     },
