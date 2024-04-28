@@ -7,7 +7,7 @@
     <!-- 表格区域 -->
     <div class="table">
       <el-table :data="ruleList" style="width: 100%">
-        <el-table-column type="index" label="序号" />
+        <el-table-column type="index" label="序号" :index="indexMethod" />
         <el-table-column label="计费规则编号" prop="ruleNumber" />
         <el-table-column label="计费规则名称" prop="ruleName" />
         <el-table-column label="免费时长(分钟)" prop="freeDuration" />
@@ -41,7 +41,7 @@ export default {
       ruleList: [],
       params: {
         page: 1,
-        pageSize: 10
+        pageSize: 2
       },
       total: 0,
       dialogVisible: false,
@@ -52,6 +52,10 @@ export default {
     this.getRuleList()
   },
   methods: {
+    // 序号方法
+    indexMethod(row) {
+      return (this.params.page - 1) * this.params.pageSize + row + 1
+    },
     async getRuleList() {
       const res = await getRuleListAPI(this.params)
       this.total = res.data.total
