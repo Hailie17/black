@@ -2,7 +2,7 @@
   <div class="rule-container">
     <div class="create-container">
       <el-button type="primary">增加停车计费规则</el-button>
-      <el-button>导出Excel</el-button>
+      <el-button @click="exportToExcel">导出Excel</el-button>
     </div>
     <!-- 表格区域 -->
     <div class="table">
@@ -34,6 +34,7 @@
 
 <script>
 import { getRuleListAPI } from '@/api/cardRule'
+import { utils, writeFileXLSX } from 'xlsx'
 export default {
   name: 'Building',
   data() {
@@ -52,6 +53,22 @@ export default {
     this.getRuleList()
   },
   methods: {
+    // 导出excel
+    exportToExcel() {
+      // 创建一个新的工作簿
+      const workbook = utils.book_new()
+      // 创建一个工作表 要求一个对象数组格式
+      const worksheet = utils.json_to_sheet([
+        { name: '张三', age: 18 },
+        { name: '李四', age: 28 }
+      ])
+      // 把工作表添加到工作簿  Data为工作表名称
+      utils.book_append_sheet(workbook, worksheet, 'Data')
+      // 改写表头
+      utils.sheet_add_aoa(worksheet, [['姓名', '年龄']], { origin: 'A1' })
+      // 导出方法进行导出
+      writeFileXLSX(workbook, 'SheetJSVueAoO.xlsx')
+    },
     // 序号方法
     indexMethod(row) {
       return (this.params.page - 1) * this.params.pageSize + row + 1
