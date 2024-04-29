@@ -14,7 +14,7 @@
         <el-table-column label="收费上线(元)" prop="chargeCeiling" />
         <el-table-column label="计费方式">
           <template #default="scope">
-            {{ scope.row.chargeType }}
+            {{ formatChargeType(scope.row) }}
           </template>
         </el-table-column>
         <el-table-column label="计费规则" prop="ruleNameView" />
@@ -53,6 +53,16 @@ export default {
     this.getRuleList()
   },
   methods: {
+    // 格式化收费模式
+    formatChargeType(row) {
+      const Map = {
+        duration: '时长收费',
+        turn: '次数收费',
+        partition: '分段收费'
+      }
+      return Map[row.chargeType]
+    },
+
     // 导出excel
     async exportToExcel() {
       const res = await getRuleListAPI(this.params)
