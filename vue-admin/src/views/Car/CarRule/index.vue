@@ -51,7 +51,7 @@ export default {
   },
   created() {
     this.getRuleList()
-  }, //1
+  },
   methods: {
     // 格式化收费模式
     formatChargeType(row) {
