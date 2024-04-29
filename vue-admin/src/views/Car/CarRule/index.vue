@@ -1,7 +1,7 @@
 <template>
   <div class="rule-container">
     <div class="create-container">
-      <el-button type="primary">增加停车计费规则</el-button>
+      <el-button type="primary" @click="addCarRule">增加停车计费规则</el-button>
       <el-button @click="exportToExcel">导出Excel</el-button>
     </div>
     <!-- 表格区域 -->
@@ -29,6 +29,50 @@
         <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="params.page" :page-sizes="[2, 4, 10, 40]" :page-size="params.pageSize" layout="total, sizes, prev, pager, next, jumper" :total="total"> </el-pagination>
       </div>
     </div>
+    <!-- 弹框 -->
+    <el-dialog :visible="dialogVisible" width="680px" title="新增规则">
+      <!-- 表单接口 -->
+      <div class="form-container">
+        <el-form ref="addForm" :model="addForm" :rules="addFormRules" label-position="top">
+          <el-form-item label="计费规则编号" prop="ruleNumber">
+            <el-input v-model="addForm.ruleNumber" />
+          </el-form-item>
+          <el-form-item label="计费规则名称" prop="ruleName">
+            <el-input v-model="addForm.ruleName" />
+          </el-form-item>
+          <el-form-item label="计费方式" prop="chargeType">
+            <el-radio-group v-model="addForm.chargeType" size="small">
+              <el-radio label="duration" border>时长收费</el-radio>
+              <el-radio label="turn" border>按次收费</el-radio>
+              <el-radio label="partition" border>分段收费</el-radio>
+            </el-radio-group>
+          </el-form-item>
+          <div class="flex-container">
+            <el-form-item label="免费时长">
+              <el-input v-model="addForm.freeDuration" />
+            </el-form-item>
+            <el-form-item label="收费上限">
+              <el-input v-model="addForm.chargeCeiling" />
+            </el-form-item>
+          </div>
+          <el-form-item label="计费规则">
+            <!-- 按时长收费区域 -->
+            <div class="duration">每 <el-input v-model="addForm.durationTime" class="input-box" /> 小时 <el-input v-model="addForm.durationPrice" class="input-box" /> 元</div>
+            <!-- 按次收费区域 -->
+            <div class="turn">每次 <el-input v-model="addForm.turnPrice" class="input-box" /> 元</div>
+            <!-- 按分段收费区域 -->
+            <div class="partition">
+              <div class="item"><el-input v-model="addForm.partitionFrameTime" class="input-box" />小时内,每小时收费<el-input v-model="addForm.partitionFramePrice" class="input-box" /> 元</div>
+              <div class="item">每增加<el-input v-model="addForm.partitionIncreaseTime" class="input-box" />小时,增加<el-input v-model="addForm.partitionIncreasePrice" class="input-box" /> 元</div>
+            </div>
+          </el-form-item>
+        </el-form>
+      </div>
+      <template #footer>
+        <el-button size="mini" @click="dialogVisible = false">取 消</el-button>
+        <el-button size="mini" type="primary">确 定</el-button>
+      </template>
+    </el-dialog>
   </div>
 </template>
 
@@ -46,13 +90,17 @@ export default {
       },
       total: 0,
       dialogVisible: false,
-      ruleList: []
+      ruleList: [],
+      addForm: []
     }
   },
   created() {
     this.getRuleList()
   },
   methods: {
+    addCarRule() {
+      this.dialogVisible = true
+    },
     // 格式化收费模式
     formatChargeType(row) {
       const Map = {
