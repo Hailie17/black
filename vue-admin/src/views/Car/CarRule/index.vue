@@ -62,7 +62,6 @@ export default {
       }
       return Map[row.chargeType]
     },
-
     // 导出excel
     async exportToExcel() {
       const res = await getRuleListAPI(this.params)
