@@ -159,7 +159,7 @@ export default {
   },
   watch: {
     'addForm.chargeType'(val) {
-      console.log(val)
+      this.$refs.addForm.clearValidate(['turn', 'turnPrice', 'partition', 'partitionFrameTime', 'partitionFramePrice', 'partitionIncreaseTime', 'partitionIncreasePrice'])
     }
   },
   created() {
