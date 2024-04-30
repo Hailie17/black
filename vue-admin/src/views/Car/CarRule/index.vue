@@ -55,7 +55,7 @@
               <el-input v-model="addForm.chargeCeiling" />
             </el-form-item>
           </div>
-          <el-form-item label="计费规则">
+          <el-form-item label="计费规则" required>
             <!-- 按时长收费区域 -->
             <div v-if="addForm.chargeType === 'duration'" class="duration">
               每
@@ -76,7 +76,7 @@
             <!-- 按分段收费区域 -->
             <div v-if="addForm.chargeType === 'partition'" class="partition">
               <div class="item">
-                <el-form-item :prop="freeRuleProp">
+                <el-form-item prop="partitionFrameTime">
                   <el-input v-model="addForm.partitionFrameTime" class="input-box" />
                 </el-form-item>
                 小时内,每小时收费
@@ -173,20 +173,7 @@ export default {
       freeRuleProp: 'durationPrice'
     }
   },
-  watch: {
-    'addForm.chargeType'(val) {
-      this.$refs.addForm.clearValidate(['turn', 'turnPrice', 'partition', 'partitionFrameTime', 'partitionFramePrice', 'partitionIncreaseTime', 'partitionIncreasePrice'])
-      if (val === 'turn') {
-        this.freeRuleProp = 'turnPrice'
-      }
-      if (val === 'partition') {
-        this.freeRuleProp = 'partitionFramePrice'
-      }
-      if (val === 'duration') {
-        this.freeRuleProp = 'durationPrice'
-      }
-    }
-  },
+  watch: {},
   created() {
     this.getRuleList()
   },
