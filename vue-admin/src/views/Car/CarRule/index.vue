@@ -57,11 +57,11 @@
           </div>
           <el-form-item label="计费规则">
             <!-- 按时长收费区域 -->
-            <div class="duration">每 <el-input v-model="addForm.durationTime" class="input-box" /> 小时 <el-input v-model="addForm.durationPrice" class="input-box" /> 元</div>
+            <div v-if="addForm.chargeType === 'duration'" class="duration">每 <el-input v-model="addForm.durationTime" class="input-box" /> 小时 <el-input v-model="addForm.durationPrice" class="input-box" /> 元</div>
             <!-- 按次收费区域 -->
-            <div class="turn">每次 <el-input v-model="addForm.turnPrice" class="input-box" /> 元</div>
+            <div v-if="addForm.chargeType === 'turn'" class="turn">每次 <el-input v-model="addForm.turnPrice" class="input-box" /> 元</div>
             <!-- 按分段收费区域 -->
-            <div class="partition">
+            <div v-if="addForm.chargeType === 'partition'" class="partition">
               <div class="item"><el-input v-model="addForm.partitionFrameTime" class="input-box" />小时内,每小时收费<el-input v-model="addForm.partitionFramePrice" class="input-box" /> 元</div>
               <div class="item">每增加<el-input v-model="addForm.partitionIncreaseTime" class="input-box" />小时,增加<el-input v-model="addForm.partitionIncreasePrice" class="input-box" /> 元</div>
             </div>
@@ -91,7 +91,10 @@ export default {
       total: 0,
       dialogVisible: false,
       ruleList: [],
-      addForm: []
+      addForm: {
+        chargeType: 'car'
+      },
+      addFormRules: {}
     }
   },
   created() {
