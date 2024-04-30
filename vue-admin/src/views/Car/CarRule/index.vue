@@ -124,36 +124,43 @@ export default {
       },
       addFormRules: {
         ruleNumber: [
-        {
-          required: true,
-          message: '请输入规则编号',
-          trigger: 'blur'
-        }
-      ],
-      ruleName: [
-        {
-          required: true,
-          message: '请输入规则名称',
-          trigger: 'blur'
-        }
-      ],
-      chargeType: [
-        {
-          required: true,
-          message: '请选择收费类型',
-          trigger: 'blur'
-        }
-      ],
-      duration: [{required: true, message: '请输入免费时长', trigger: 'blur'}],
-      durationTime: [{required: true, message: '请输入免费时长', trigger: 'blur'}],
-      durationPrice: [{required: true, message: '请输入免费时长', trigger: 'blur'}],
-      turn: [{required: true, message: '请输入免费时长', trigger: 'blur'}],
-      turnPrice: [{required: true, message: '请输入免费时长', trigger: 'blur'}],
-      partition: [{required: true, message: '请输入免费时长', trigger: 'blur'}],
-      partitionFrameTime: [{required: true, message: '请输入免费时长', trigger: 'blur'}],
-      partitionFramePrice: [{required: true, message: '请输入免费时长', trigger: 'blur'}],
-      partitionIncreaseTime: [{required: true, message: '请输入免费时长', trigger: 'blur'}],
-      partitionIncreasePrice: [{required: true, message: '请输入免费时长', trigger: 'blur'}]
+          {
+            required: true,
+            message: '请输入规则编号',
+            trigger: 'blur'
+          }
+        ],
+        ruleName: [
+          {
+            required: true,
+            message: '请输入规则名称',
+            trigger: 'blur'
+          }
+        ],
+        chargeType: [
+          {
+            required: true,
+            message: '请选择收费类型',
+            trigger: 'blur'
+          }
+        ],
+        duration: [{ required: true, message: '请输入免费时长', trigger: 'blur' }],
+        durationTime: [{ required: true, message: '请输入免费时长', trigger: 'blur' }],
+        durationPrice: [{ required: true, message: '请输入免费时长', trigger: 'blur' }],
+        turn: [{ required: true, message: '请输入免费时长', trigger: 'blur' }],
+        turnPrice: [{ required: true, message: '请输入免费时长', trigger: 'blur' }],
+        partition: [{ required: true, message: '请输入免费时长', trigger: 'blur' }],
+        partitionFrameTime: [{ required: true, message: '请输入免费时长', trigger: 'blur' }],
+        partitionFramePrice: [{ required: true, message: '请输入免费时长', trigger: 'blur' }],
+        partitionIncreaseTime: [{ required: true, message: '请输入免费时长', trigger: 'blur' }],
+        partitionIncreasePrice: [{ required: true, message: '请输入免费时长', trigger: 'blur' }]
+      }
+    }
+  },
+  watch: {
+    'addForm.chargeType'(val) {
+      console.log(val)
+    }
   },
   created() {
     this.getRuleList()
