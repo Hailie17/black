@@ -97,15 +97,15 @@
         </el-form>
       </div>
       <template #footer>
-        <el-button size="mini" @click="dialogVisible = false">取 消</el-button>
-        <el-button size="mini" type="primary">确 定</el-button>
+        <el-button size="mini" @click="closeDialog">取 消</el-button>
+        <el-button size="mini" type="primary" @click="confirmAdd">确 定</el-button>
       </template>
     </el-dialog>
   </div>
 </template>
 
 <script>
-import { getRuleListAPI } from '@/api/cardRule'
+import { getRuleListAPI, addFreeRuleAPI } from '@/api/cardRule'
 import { utils, writeFileXLSX } from 'xlsx'
 export default {
   name: 'Building',
@@ -120,7 +120,22 @@ export default {
       dialogVisible: false,
       ruleList: [],
       addForm: {
-        chargeType: 'car'
+        ruleNumber: '', // 计费规则编号
+        ruleName: '', // 计费规则名称
+        chargeType: 'duration', // 计费规则类型 duration / turn / partition
+        chargeCeiling: null,
+        freeDuration: null,
+        // 时长计费独有字段
+        durationTime: null, // 时长计费单位时间
+        durationPrice: null, // 时长计费单位价格
+        durationType: 'hour',
+        // 按次收费独有字段
+        turnPrice: null,
+        // 分段计费独有字段
+        partitionFrameTime: null, // 段内时间
+        partitionFramePrice: null, // 段内费用
+        partitionIncreaseTime: null, // 超出时间
+        partitionIncreasePrice: null // 超出费为收费价钱
       },
       addFormRules: {
         ruleNumber: [
@@ -155,7 +170,7 @@ export default {
         partitionIncreaseTime: [{ required: true, message: '请输入免费时长', trigger: 'blur' }],
         partitionIncreasePrice: [{ required: true, message: '请输入免费时长', trigger: 'blur' }]
       },
-      freeRuleProp: null
+      freeRuleProp: 'durationPrice'
     }
   },
   watch: {
@@ -176,6 +191,23 @@ export default {
     this.getRuleList()
   },
   methods: {
+    // 添加计费规则
+    confirmAdd() {
+      this.$refs.addForm.validate(async valid => {
+        if (!valid) return
+        await addFreeRuleAPI(this.addForm)
+        this.$message.success('添加成功')
+        this.getRuleList()
+        this.closeDialog()
+      })
+    },
+    // 关闭弹窗
+    closeDialog() {
+      this.dialogVisible = false
+      this.$refs.addForm.resetFields()
+      this.addForm.freeDuration = ''
+      this.addForm.chargeCeiling = ''
+    },
     addCarRule() {
       this.dialogVisible = true
     },
