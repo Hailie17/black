@@ -12,27 +12,41 @@
       </div>
       <el-button class="addBtn" size="mini">添加角色</el-button>
     </div>
+    <div class="right-wrapper">
+      <div class="tree-wrapper">
+        <div v-for="item in treeList" :key="item.id" class="tree-item">
+          <div class="tree-title">{{ item.title }}</div>
+          <el-tree :data="treeList.children" />
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-import { getRoleListAPI } from '@/api/system.js'
+import { getRoleListAPI, getTreeListAPI } from '@/api/system.js'
 export default {
   name: 'Role',
   data() {
     return {
       roleList: [],
+      treeList: [], // 权限树形列表
       activeIndex: 0
     }
   },
   created() {
     this.getRoleList()
+    this.getTreeList()
   },
   methods: {
     // 获取角色列表
     async getRoleList() {
       const res = await getRoleListAPI()
       this.roleList = res.data
+    },
+    async getTreeList() {
+      const res = await getTreeListAPI()
+      this.treeList = res.data
     },
     // 切换菜单
     menuChange(index) {

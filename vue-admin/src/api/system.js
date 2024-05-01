@@ -8,3 +8,13 @@ export function getRoleListAPI() {
     url: '/park/sys/role'
   })
 }
+
+/**
+ * 获取tree权限列表
+ * @returns
+ */
+export function getTreeListAPI() {
+  return request({
+    url: '/park/sys/permision/all/tree'
+  })
+}
