@@ -157,3 +157,8 @@ export default {
   }
 }
 </script>
+<style lang="scss" scoped>
+.form-container {
+  padding: 0px 80px;
+}
+</style>
