@@ -3,7 +3,7 @@
     <div class="left-wrapper">
       <div v-for="(item, index) in roleList" :key="item.roleId" class="role-item" :class="{ active: activeIndex === index }" @click="menuChange(index)">
         <div class="role-info">
-          <svg-icon icon-class="user" class="icon" />
+          <svg-icon :icon-class="activeIndex === index ? 'user-active' : 'user'" class="icon" />
           {{ item.roleName }}
         </div>
         <div class="more">
