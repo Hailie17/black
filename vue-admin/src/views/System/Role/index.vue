@@ -1,7 +1,7 @@
 <template>
   <div class="role-container">
     <div class="left-wrapper">
-      <div v-for="item in roleList" :key="item.roleId" class="role-item">
+      <div v-for="(item, index) in roleList" :key="item.roleId" class="role-item" :class="{ active: activeIndex === index }" @click="menuChange(index)">
         <div class="role-info">
           <svg-icon icon-class="user" class="icon" />
           {{ item.roleName }}
@@ -21,16 +21,22 @@ export default {
   name: 'Role',
   data() {
     return {
-      roleList: []
+      roleList: [],
+      activeIndex: 0
     }
   },
   created() {
     this.getRoleList()
   },
   methods: {
+    // 获取角色列表
     async getRoleList() {
       const res = await getRoleListAPI()
       this.roleList = res.data
+    },
+    // 切换菜单
+    menuChange(index) {
+      this.activeIndex = index
     }
   }
 }
