@@ -10,7 +10,7 @@
           <svg-icon icon-class="more" />
         </div>
       </div>
-      <el-button class="addBtn" size="mini">添加角色</el-button>
+      <el-button class="addBtn" size="mini" @click="$router.push('/sys/addRole')">添加角色</el-button>
     </div>
     <div class="right-wrapper">
       <el-tabs v-model="activeName">
