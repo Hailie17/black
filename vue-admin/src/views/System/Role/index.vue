@@ -50,6 +50,16 @@ export default {
     async getTreeList() {
       const res = await getTreeListAPI()
       this.treeList = res.data
+      this.addDisabledProp(this.treeList)
+    },
+    // 递归调用添加disabled属性
+    addDisabledProp(treeList) {
+      treeList.forEach(item => {
+        item.disabled = true
+        if (item.children) {
+          this.addDisabledProp(item.children)
+        }
+      })
     },
     // 切换菜单
     menuChange(index) {
