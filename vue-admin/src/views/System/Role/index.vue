@@ -40,9 +40,10 @@ export default {
       }
     }
   },
-  created() {
-    this.getRoleList()
-    this.getTreeList()
+  async created() {
+    await this.getRoleList()
+    await this.getTreeList()
+    this.menuChange(0)
   },
   methods: {
     // 获取角色列表
