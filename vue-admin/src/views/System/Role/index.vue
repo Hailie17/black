@@ -16,7 +16,7 @@
       <div class="tree-wrapper">
         <div v-for="item in treeList" :key="item.id" class="tree-item">
           <div class="tree-title">{{ item.title }}</div>
-          <el-tree :data="treeList.children" />
+          <el-tree :data="item.children" :props="defaultProps" />
         </div>
       </div>
     </div>
@@ -31,7 +31,10 @@ export default {
     return {
       roleList: [],
       treeList: [], // 权限树形列表
-      activeIndex: 0
+      activeIndex: 0,
+      defaultProps: {
+        label: 'title'
+      }
     }
   },
   created() {
