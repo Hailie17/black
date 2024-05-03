@@ -33,7 +33,10 @@ export default {
       treeList: [], // 权限树形列表
       activeIndex: 0,
       defaultProps: {
-        label: 'title'
+        label: 'title',
+        disabled: () => {
+          return true
+        }
       }
     }
   },
@@ -50,7 +53,7 @@ export default {
     async getTreeList() {
       const res = await getTreeListAPI()
       this.treeList = res.data
-      this.addDisabledProp(this.treeList)
+      // this.addDisabledProp(this.treeList)
     },
     // 递归调用添加disabled属性
     addDisabledProp(treeList) {
