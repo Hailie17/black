@@ -18,3 +18,13 @@ export function getTreeListAPI() {
     url: '/park/sys/permision/all/tree'
   })
 }
+
+/**
+ * 获取当前角色权限点列表
+ * @returns
+ */
+export function getRoleDetailAPI(roleId) {
+  return request({
+    url: `/park/sys/role/${roleId}`
+  })
+}

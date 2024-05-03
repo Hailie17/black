@@ -16,7 +16,7 @@
       <div class="tree-wrapper">
         <div v-for="item in treeList" :key="item.id" class="tree-item">
           <div class="tree-title">{{ item.title }}</div>
-          <el-tree show-checkbox :data="item.children" :props="defaultProps" :default-expend-all="true" />
+          <el-tree ref="tree" node-key="id" show-checkbox :data="item.children" :props="defaultProps" :default-expend-all="true" />
         </div>
       </div>
     </div>
@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import { getRoleListAPI, getTreeListAPI } from '@/api/system.js'
+import { getRoleListAPI, getTreeListAPI, getRoleDetailAPI } from '@/api/system.js'
 export default {
   name: 'Role',
   data() {
@@ -67,6 +67,17 @@ export default {
     // 切换菜单
     menuChange(index) {
       this.activeIndex = index
+      const roleId = this.roleList[index].roleId
+      this.getRoleDetail(roleId)
+    },
+    // 获取用户对应权限列表
+    async getRoleDetail(roleId) {
+      const res = await getRoleDetailAPI(roleId)
+      const perms = res.data.perms
+      const treeComponentList = this.$refs.tree
+      treeComponentList.forEach((tree, index) => {
+        tree.setCheckedKeys(perms[index])
+      })
     }
   }
 }
