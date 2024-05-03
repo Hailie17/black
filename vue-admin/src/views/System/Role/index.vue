@@ -13,12 +13,17 @@
       <el-button class="addBtn" size="mini">添加角色</el-button>
     </div>
     <div class="right-wrapper">
-      <div class="tree-wrapper">
-        <div v-for="item in treeList" :key="item.id" class="tree-item">
-          <div class="tree-title">{{ item.title }}</div>
-          <el-tree ref="tree" node-key="id" show-checkbox :data="item.children" :props="defaultProps" :default-expand-all="true" />
-        </div>
-      </div>
+      <el-tabs v-model="activeName">
+        <el-tab-pane label="功能权限" name="permission">
+          <div class="tree-wrapper">
+            <div v-for="item in treeList" :key="item.id" class="tree-item">
+              <div class="tree-title">{{ item.title }}</div>
+              <el-tree ref="tree" node-key="id" show-checkbox :data="item.children" :props="defaultProps" :default-expand-all="true" />
+            </div>
+          </div>
+        </el-tab-pane>
+        <el-tab-pane label="成员" name="employee">配置管理</el-tab-pane>
+      </el-tabs>
     </div>
   </div>
 </template>
@@ -37,7 +42,8 @@ export default {
         disabled: () => {
           return true
         }
-      }
+      },
+      activeName: 'permission'
     }
   },
   async created() {
