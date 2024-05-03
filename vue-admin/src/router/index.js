@@ -53,6 +53,10 @@ export const routes = [
     component: () => import('@/views/Car/CarCard/components/AddCard.vue')
   },
   {
+    path: '/sys/addRole',
+    component: () => import('@/views/System/Role/AddRole.vue')
+  },
+  {
     path: '/park/addEnterprise',
     component: () => import('@/views/Park/Enterprise/components/AddEnterprise.vue')
   },
