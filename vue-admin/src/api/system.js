@@ -28,3 +28,14 @@ export function getRoleDetailAPI(roleId) {
     url: `/park/sys/role/${roleId}`
   })
 }
+
+/**
+ * 获取角色成员列表
+ * @returns
+ */
+export function getRoleUserAPI(roleId, params) {
+  return request({
+    url: `/park/sys/roleUser/${roleId}`,
+    params
+  })
+}

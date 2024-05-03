@@ -22,14 +22,20 @@
             </div>
           </div>
         </el-tab-pane>
-        <el-tab-pane label="成员" name="employee">配置管理</el-tab-pane>
+        <el-tab-pane :label="`成员（${total}）`" name="employee">
+          <el-table :data="userList" style="width: 100%">
+            <el-table-column type="index" label="序号" width="250"> </el-table-column>
+            <el-table-column prop="name" label="员工姓名"> </el-table-column>
+            <el-table-column prop="userName" label="登录账号"> </el-table-column>
+          </el-table>
+        </el-tab-pane>
       </el-tabs>
     </div>
   </div>
 </template>
 
 <script>
-import { getRoleListAPI, getTreeListAPI, getRoleDetailAPI } from '@/api/system.js'
+import { getRoleListAPI, getTreeListAPI, getRoleDetailAPI, getRoleUserAPI } from '@/api/system.js'
 export default {
   name: 'Role',
   data() {
@@ -43,7 +49,13 @@ export default {
           return true
         }
       },
-      activeName: 'permission'
+      activeName: 'permission',
+      params: {
+        page: 1,
+        pageSise: 10
+      },
+      total: 0,
+      userList: []
     }
   },
   async created() {
@@ -76,6 +88,13 @@ export default {
       this.activeIndex = index
       const roleId = this.roleList[index].roleId
       this.getRoleDetail(roleId)
+      this.getRoleUserList(roleId)
+    },
+    // 获取用户列表
+    async getRoleUserList(roleId) {
+      const res = await getRoleUserAPI(roleId, this.params)
+      this.total = res.data.total
+      this.userList = res.data.rows
     },
     // 获取用户对应权限列表
     async getRoleDetail(roleId) {
