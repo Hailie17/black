@@ -18,7 +18,16 @@
       </div>
       <div v-show="activeStep === 1" class="form-container">
         <div class="title">角色信息</div>
-        <div class="form">角色信息内容</div>
+        <div class="form">
+          <el-form ref="roleForm" class="form-box" :model="roleForm" :rules="roleRules">
+            <el-form-item label="角色名称" prop="roleName">
+              <el-input v-model="roleForm.roleName" />
+            </el-form-item>
+            <el-form-item label="角色描述" prop="remark">
+              <el-input v-model="roleForm.remark" />
+            </el-form-item>
+          </el-form>
+        </div>
       </div>
       <div v-show="activeStep === 2" class="form-container">
         <div class="title">权限配置</div>
@@ -42,7 +51,15 @@
 export default {
   data() {
     return {
-      activeStep: 1
+      activeStep: 1,
+      roleForm: {
+        roleName: '',
+        remark: ''
+      },
+      roleRules: {
+        roleName: [{ required: true, message: '请输入角色名称', trigger: 'blur' }],
+        remark: [{ required: true, message: '请输入角色描述', trigger: 'blur' }]
+      }
     }
   },
   methods: {
@@ -50,9 +67,19 @@ export default {
       if (this.activeStep === 1) return
       this.activeStep--
     },
+    // 下一步
     increseStep() {
       if (this.activeStep === 3) return
-      this.activeStep++
+
+      if (this.activeStep === 1) {
+        // 当前是角色信息状态，进行表单校验
+        this.$refs.roleForm.validate(valid => {
+          if (valid) {
+            // 校验通过才能进入下一个状态
+            this.activeStep++
+          }
+        })
+      }
     }
   }
 }
