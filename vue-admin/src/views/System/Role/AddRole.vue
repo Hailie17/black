@@ -59,9 +59,9 @@ export default {
       activeStep: 1,
       roleForm: {
         roleName: '',
-        remark: '',
-        treeList: [] // 权限树形列表
+        remark: ''
       },
+      treeList: [], // 权限树形列表
       roleRules: {
         roleName: [{ required: true, message: '请输入角色名称', trigger: 'blur' }],
         remark: [{ required: true, message: '请输入角色描述', trigger: 'blur' }]
@@ -94,6 +94,22 @@ export default {
             this.activeStep++
           }
         })
+      } else if (this.activeStep === 2) {
+        // 当前是权限信息状态
+        this.roleForm.perms = []
+        this.$refs.tree.forEach(tree => {
+          this.roleForm.perms.push(tree.getCheckedKeys())
+        })
+        // 如果长度为零 没有选中任何东西
+        if (this.roleForm.perms.flat().length === 0) {
+          this.$message({
+            type: 'error',
+            message: '请至少选择一个权限点'
+          })
+        } else {
+          // 进入到下一页
+          this.activeStep++
+        }
       }
     }
   }
