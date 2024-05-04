@@ -30,8 +30,12 @@
         </div>
       </div>
       <div v-show="activeStep === 2" class="form-container">
-        <div class="title">权限配置</div>
-        <div class="form">权限配置内容</div>
+        <div class="tree-wrapper">
+          <div v-for="item in treeList" :key="item.id" class="tree-item">
+            <div class="tree-title">{{ item.title }}</div>
+            <el-tree ref="tree" :data="item.children" show-checkbox check-strictly default-expand-all node-key="id" highlight-current :props="{ label: 'title' }" />
+          </div>
+        </div>
       </div>
       <div v-show="activeStep === 3" class="form-container">
         <div class="title">检查并完成</div>
@@ -48,13 +52,15 @@
   </div>
 </template>
 <script>
+import { getTreeListAPI } from '@/api/system'
 export default {
   data() {
     return {
       activeStep: 1,
       roleForm: {
         roleName: '',
-        remark: ''
+        remark: '',
+        treeList: [] // 权限树形列表
       },
       roleRules: {
         roleName: [{ required: true, message: '请输入角色名称', trigger: 'blur' }],
@@ -62,7 +68,16 @@ export default {
       }
     }
   },
+  mounted() {
+    // 在初始化时候就加载好
+    this.getTreeList()
+  },
   methods: {
+    // 获取功能权限列表
+    async getTreeList() {
+      const res = await getTreeListAPI()
+      this.treeList = res.data
+    },
     decreseStep() {
       if (this.activeStep === 1) return
       this.activeStep--
