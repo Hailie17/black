@@ -58,13 +58,13 @@
       <div class="btn-container">
         <el-button v-if="activeStep > 1" @click="decreseStep">上一步</el-button>
         <el-button v-if="activeStep < 3" type="primary" @click="increseStep">下一步</el-button>
-        <el-button v-if="activeStep === 3" type="primary">确认添加</el-button>
+        <el-button v-if="activeStep === 3" type="primary" @click="confirmAdd">确认添加</el-button>
       </div>
     </footer>
   </div>
 </template>
 <script>
-import { getTreeListAPI } from '@/api/system'
+import { getTreeListAPI, createRoleUserAPI } from '@/api/system'
 export default {
   data() {
     return {
@@ -85,6 +85,14 @@ export default {
     this.getTreeList()
   },
   methods: {
+    async confirmAdd() {
+      await createRoleUserAPI(this.roleForm)
+      this.$message({
+        type: 'success',
+        message: '添加角色成功'
+      })
+      this.$router.back()
+    },
     // 获取功能权限列表
     async getTreeList() {
       const res = await getTreeListAPI()
