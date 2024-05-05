@@ -39,7 +39,19 @@
       </div>
       <div v-show="activeStep === 3" class="form-container">
         <div class="title">检查并完成</div>
-        <div class="form">检查并完成内容</div>
+        <div class="form">
+          <div class="info">
+            <div class="form-item">角色名称：{{ roleForm.roleName }}</div>
+            <div class="form-item">角色描述：{{ roleForm.remark }}</div>
+            <div class="form-item">角色权限：</div>
+            <div class="tree-wrapper">
+              <div v-for="item in treeList" :key="item.id" class="tree-item">
+                <div class="tree-title">{{ item.title }}</div>
+                <el-tree ref="diabledTree" :data="item.children" show-checkbox default-expand-all node-key="id" :highlight-current="false" :props="{ label: 'title', disabled: () => true }" />
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </main>
     <footer class="add-footer">
@@ -107,8 +119,12 @@ export default {
             message: '请至少选择一个权限点'
           })
         } else {
-          // 进入到下一页
+          // 如果长度不为零，进入到检查并完成
           this.activeStep++
+          // 回填已选择数据
+          this.$refs.diabledTree.forEach((tree, index) => {
+            tree.setCheckedKeys(this.roleForm.perms[index])
+          })
         }
       }
     }
