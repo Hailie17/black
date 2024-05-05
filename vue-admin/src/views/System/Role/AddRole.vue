@@ -33,7 +33,7 @@
         <div class="tree-wrapper">
           <div v-for="item in treeList" :key="item.id" class="tree-item">
             <div class="tree-title">{{ item.title }}</div>
-            <el-tree ref="tree" :data="item.children" show-checkbox check-strictly default-expand-all node-key="id" highlight-current :props="{ label: 'title' }" />
+            <el-tree ref="tree" :data="item.children" show-checkbox default-expand-all node-key="id" highlight-current :props="{ label: 'title' }" />
           </div>
         </div>
       </div>
