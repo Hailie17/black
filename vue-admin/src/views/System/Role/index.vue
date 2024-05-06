@@ -43,7 +43,7 @@
 </template>
 
 <script>
-import { getRoleListAPI, getTreeListAPI, getRoleDetailAPI, getRoleUserAPI } from '@/api/system.js'
+import { getRoleListAPI, getTreeListAPI, getRoleDetailAPI, getRoleUserAPI, delRoleUserAPI } from '@/api/system.js'
 export default {
   name: 'Role',
   data() {
