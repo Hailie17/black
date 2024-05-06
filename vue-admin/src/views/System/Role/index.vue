@@ -7,7 +7,15 @@
           {{ item.roleName }}
         </div>
         <div class="more">
-          <svg-icon icon-class="more" />
+          <el-dropdown>
+            <span class="el-dropdown-link">
+              <svg-icon icon-class="more" />
+            </span>
+            <el-dropdown-menu slot="dropdown">
+              <el-dropdown-item @click.native="$router.push(`/sys/addRole?id=${item.roleId}`)">编辑角色</el-dropdown-item>
+              <el-dropdown-item>删除</el-dropdown-item>
+            </el-dropdown-menu>
+          </el-dropdown>
         </div>
       </div>
       <el-button class="addBtn" size="mini" @click="$router.push('/sys/addRole')">添加角色</el-button>

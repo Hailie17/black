@@ -4,7 +4,7 @@
       <div class="left">
         <span class="arrow" @click="$router.back()"><i class="el-icon-arrow-left" />返回</span>
         <span>|</span>
-        <span>添加角色</span>
+        <span>{{ id ? '编辑角色' : '添加角色' }}</span>
       </div>
       <div class="right">这是第n天</div>
     </header>
@@ -83,6 +83,11 @@ export default {
   mounted() {
     // 在初始化时候就加载好
     this.getTreeList()
+  },
+  computed: {
+    id() {
+      return this.$route.query.id
+    }
   },
   methods: {
     async confirmAdd() {
