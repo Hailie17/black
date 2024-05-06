@@ -51,3 +51,15 @@ export function createRoleUserAPI(data) {
     data
   })
 }
+
+/**
+ * 更改角色
+ * @returns
+ */
+export function updateRoleAPI(data) {
+  return request({
+    url: `/park/sys/role`,
+    method: 'PUT',
+    data
+  })
+}

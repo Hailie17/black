@@ -64,7 +64,7 @@
   </div>
 </template>
 <script>
-import { getTreeListAPI, createRoleUserAPI } from '@/api/system'
+import { getTreeListAPI, createRoleUserAPI, getRoleDetailAPI, updateRoleAPI } from '@/api/system'
 export default {
   data() {
     return {
@@ -83,6 +83,9 @@ export default {
   mounted() {
     // 在初始化时候就加载好
     this.getTreeList()
+    if (this.id) {
+      this.getRoleDetail()
+    }
   },
   computed: {
     id() {
@@ -90,12 +93,32 @@ export default {
     }
   },
   methods: {
-    async confirmAdd() {
-      await createRoleUserAPI(this.roleForm)
-      this.$message({
-        type: 'success',
-        message: '添加角色成功'
+    async getRoleDetail() {
+      const res = await getRoleDetailAPI(this.id)
+      const { perms, remark, roleId, roleName } = res.data
+      // 回填基础表单
+      this.roleForm = { perms, remark, roleId, roleName }
+      // 回填Tree
+      this.$refs.tree.forEach((tree, index) => {
+        tree.setCheckedKeys(this.roleForm.perms[index])
       })
+    },
+    // 确认编辑 / 添加
+    async confirmAdd() {
+      if (this.id) {
+        delete this.roleForm.userTotal
+        await updateRoleAPI(this.roleForm)
+        this.$message({
+          type: 'success',
+          message: '编辑角色成功'
+        })
+      } else {
+        await createRoleUserAPI(this.roleForm)
+        this.$message({
+          type: 'success',
+          message: '添加角色成功'
+        })
+      }
       this.$router.back()
     },
     // 获取功能权限列表
