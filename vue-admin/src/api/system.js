@@ -63,3 +63,14 @@ export function updateRoleAPI(data) {
     data
   })
 }
+
+/**
+ * 删除角色
+ * @returns
+ */
+export function delRoleUserAPI(roleId) {
+  return request({
+    url: `/park/sys/role/${roleId}`,
+    method: 'DELETE'
+  })
+}

@@ -13,7 +13,7 @@
             </span>
             <el-dropdown-menu slot="dropdown">
               <el-dropdown-item @click.native="$router.push(`/sys/addRole?id=${item.roleId}`)">编辑角色</el-dropdown-item>
-              <el-dropdown-item>删除</el-dropdown-item>
+              <el-dropdown-item @click.native="delRole(item.roleId)">删除</el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
         </div>
@@ -72,6 +72,20 @@ export default {
     this.menuChange(0)
   },
   methods: {
+    delRole(roleId) {
+      this.$confirm('是否确认删除当前角色?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(async () => {
+        await delRoleUserAPI(roleId)
+        this.getRoleList()
+        this.$message({
+          type: 'success',
+          message: '删除成功!'
+        })
+      })
+    },
     // 获取角色列表
     async getRoleList() {
       const res = await getRoleListAPI()
