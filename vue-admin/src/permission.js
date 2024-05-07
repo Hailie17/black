@@ -1,6 +1,7 @@
 import router from '@/router'
 import store from '@/store'
 const whiteList = ['/login', '/404']
+
 // 获取一级权限标识
 function getFirstPermission(permissions) {
   const firtsPermArr = permissions.map(item => {
@@ -9,6 +10,7 @@ function getFirstPermission(permissions) {
   // 去重 set不能存在重复的数组 但她不是一个真的数组
   return Array.from(new Set(firtsPermArr))
 }
+
 // 获取二级权限标识
 function getSecondPermission(permissions) {
   const secondPermArr = permissions.map(item => {
@@ -16,6 +18,27 @@ function getSecondPermission(permissions) {
     return `${arr[0]}:${arr[1]}`
   })
   return Array.from(new Set(secondPermArr))
+}
+
+// 根据权限标识过滤路由表
+function getRoutes(firstRoutePerms, secondRoutePerms, asyncRoutes) {
+  if (firstRoutePerms.includes('*')) {
+    // 管理员
+    return asyncRoutes
+  }
+  // 根据一级和二级对动态路由表做过滤 return出去过滤之后的路由表
+  // 1. 根据一级路由对动态路由表做过滤
+  return asyncRoutes
+    .filter(route => {
+      return firstRoutePerms.includes(route.permission)
+    })
+    .map(item => {
+      // 2. 对二级路由做过滤
+      return {
+        ...item,
+        children: item.children.filter(item => secondRoutePerms.includes(item.permission))
+      }
+    })
 }
 
 router.beforeEach(async (to, from, next) => {
