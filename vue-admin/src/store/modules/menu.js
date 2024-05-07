@@ -1,3 +1,4 @@
+import { getProfileAPI } from '@/api/user'
 export default {
   namespaced: true,
   namespaced: true,
