@@ -9,6 +9,7 @@ router.beforeEach((to, from, next) => {
       next('/')
     } else {
       next()
+      store.dispatch('menu/getProfile')
     }
   } else {
     if (whiteList.includes(to.path)) {
