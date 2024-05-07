@@ -54,6 +54,8 @@ router.beforeEach(async (to, from, next) => {
       const firstPermissions = getFirstPermission(profile.permissions)
       const secondPermissions = getSecondPermission(profile.permissions)
       const routes = getRoutes(firstPermissions, secondPermissions, asyncRoutes)
+      // 添加动态路由, 把筛选后的路由展示在左侧
+      routes.forEach(item => router.addRoute(item))
     }
   } else {
     if (whiteList.includes(to.path)) {
