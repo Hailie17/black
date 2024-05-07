@@ -1,4 +1,5 @@
 import router from '@/router'
+import { asyncRoutes } from '@/router/asyncRoutes'
 import store from '@/store'
 const whiteList = ['/login', '/404']
 
@@ -22,23 +23,23 @@ function getSecondPermission(permissions) {
 
 // 根据权限标识过滤路由表
 function getRoutes(firstRoutePerms, secondRoutePerms, asyncRoutes) {
+  console.log(firstRoutePerms)
   if (firstRoutePerms.includes('*')) {
     // 管理员
     return asyncRoutes
   }
   // 根据一级和二级对动态路由表做过滤 return出去过滤之后的路由表
   // 1. 根据一级路由对动态路由表做过滤
-  return asyncRoutes
-    .filter(route => {
-      return firstRoutePerms.includes(route.permission)
-    })
-    .map(item => {
-      // 2. 对二级路由做过滤
-      return {
-        ...item,
-        children: item.children.filter(item => secondRoutePerms.includes(item.permission))
-      }
-    })
+  const firstRoutes = asyncRoutes.filter(route => {
+    return firstRoutePerms.includes(route.permission)
+  })
+  return firstRoutes.map(item => {
+    // 2. 对二级路由做过滤
+    return {
+      ...item,
+      children: item.children.filter(item => secondRoutePerms.includes(item.permission))
+    }
+  })
 }
 
 router.beforeEach(async (to, from, next) => {
@@ -52,6 +53,7 @@ router.beforeEach(async (to, from, next) => {
       const profile = store.state.menu.profile
       const firstPermissions = getFirstPermission(profile.permissions)
       const secondPermissions = getSecondPermission(profile.permissions)
+      const routes = getRoutes(firstPermissions, secondPermissions, asyncRoutes)
     }
   } else {
     if (whiteList.includes(to.path)) {
