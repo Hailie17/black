@@ -93,6 +93,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import { rentingOutAPI, getEnterpriseAPI, deleteEnterpriseAPI, getBuildingListAPI, addRendAPI, getEnterpriseRentAPI } from '@/api/enterprise'
 import { uploadFiles } from '@/api/common'
 export default {
@@ -125,6 +126,9 @@ export default {
   },
   created() {
     this.getEnterpriseLIst()
+  },
+  computed: {
+    ...mapState('menu', ['profile'])
   },
   methods: {
     // 详情
