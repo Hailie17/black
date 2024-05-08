@@ -4,12 +4,16 @@ export default {
   namespaced: true,
   state: () => {
     return {
-      profile: {}
+      profile: {},
+      menuList: []
     }
   },
   mutations: {
     setProfile(state, profile) {
       state.profile = profile
+    },
+    setMenuList(state, filterRoutes) {
+      state.menuList = [...state.menuList, ...filterRoutes]
     }
   },
   actions: {

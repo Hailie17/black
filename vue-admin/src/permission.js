@@ -54,8 +54,10 @@ router.beforeEach(async (to, from, next) => {
       const firstPermissions = getFirstPermission(profile.permissions)
       const secondPermissions = getSecondPermission(profile.permissions)
       const routes = getRoutes(firstPermissions, secondPermissions, asyncRoutes)
-      // 添加动态路由, 把筛选后的路由展示在左侧
+      // 添加动态路由, 把筛选后的路由展示在左侧 -- 跳转
       routes.forEach(item => router.addRoute(item))
+      // 把路由表存入vuex -- 渲染
+      store.commit('menu/setMenuList', routes)
     }
   } else {
     if (whiteList.includes(to.path)) {
