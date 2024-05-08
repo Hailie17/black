@@ -15,12 +15,12 @@ export default {
     },
     setMenuList(state, asyncRoutes) {
       state.menuList = [...routes, ...asyncRoutes]
-    }
+    },
     // 退出清空路由
-    // resetRouter(state) {
-    //   resetRouter()
-    //   state.menuList = [...routes]
-    // }
+    resetRouter(state) {
+      resetRouter()
+      state.menuList = [...routes]
+    }
   },
   actions: {
     async getProfile(ctx) {

@@ -28,6 +28,8 @@ export default {
     // 退出登录
     logout() {
       this.$store.commit('user/removeToken')
+      // 清空路由
+      this.$store('menu/clearMenuList')
       // 记住当前退出页面的路由 ?redirect=${this.$route.fullPath}
       this.$router.push(`/login?redirect=${this.$route.fullPath}`)
     }
