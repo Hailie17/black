@@ -19,7 +19,7 @@ export default {
     // 退出清空路由
     resetRouter(state) {
       resetRouter()
-      state.menuList = [...routes]
+      state.menuList = []
     }
   },
   actions: {
