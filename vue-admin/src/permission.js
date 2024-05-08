@@ -23,7 +23,6 @@ function getSecondPermission(permissions) {
 
 // 根据权限标识过滤路由表
 function getRoutes(firstRoutePerms, secondRoutePerms, asyncRoutes) {
-  console.log(firstRoutePerms)
   if (firstRoutePerms.includes('*')) {
     // 管理员
     return asyncRoutes

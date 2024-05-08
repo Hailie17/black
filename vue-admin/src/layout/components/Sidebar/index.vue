@@ -19,7 +19,8 @@ export default {
   computed: {
     routes() {
       // this.$router.options.routes 创建路由时传入的路由规则
-      return this.$router.options.routes
+      // return this.$router.options.routes
+      return this.$store.state.menu.menuList
     },
     activeMenu() {
       const route = this.$route
