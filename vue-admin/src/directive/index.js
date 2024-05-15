@@ -7,5 +7,8 @@ Vue.directive('permission', {
   // binding 自定义指令的绑定值
   inserted(el, binding) {
     const perms = store.state.menu.profile.permission
+    if (!perms.includes(binding.value)) {
+      el.remove()
+    }
   }
 })

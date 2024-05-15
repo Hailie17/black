@@ -7,7 +7,7 @@
       <el-button type="primary" @click="search">查询</el-button>
     </div>
     <div class="create-container">
-      <el-button type="primary" @click="add" v-if="profile.permission.includes('park:building:add_edit')">添加企业</el-button>
+      <el-button type="primary" @click="add" v-permission="'park:building:add_edit'">添加企业</el-button>
     </div>
     <!-- 表格区域 -->
     <div class="table">
