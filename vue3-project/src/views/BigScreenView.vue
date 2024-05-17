@@ -1,15 +1,27 @@
+<script setup>
+import {ref} from 'vue'
+import {getParkInfoAPI} from '@/api/park.js'
+const parkInfo = ref({})
+const getParkInfo = async () => {
+  const res = await getParkInfoAPI()
+  parkInfo.value = res.data
+}
+getParkInfo()
+</script>
+
 <template>
   <div class="all-charts">
     <!-- 园区概况 -->
-    <div class="section-one">
+    <div class="section-one" v-if="Object.keys(parkInfo).length > 0">
       <img class="img-header"
            src="https://yjy-teach-oss.oss-cn-beijing.aliyuncs.com/smartPark/%E5%A4%A7%E5%B1%8F%E5%88%87%E5%9B%BE/%E5%9B%AD%E5%8C%BA%E6%A6%82%E5%86%B5%402x.png"
            alt="" />
       <div class="icons-container">
         <div class="item">
           <div class="icons-item building-icon">
+            <!--可选链 ?.-->
             <span class="number">
-              {{ 28 }}
+              {{ parkInfo.base?.buildingTotal }}
             </span>
           </div>
           <span class="title">楼宇总数</span>
@@ -18,7 +30,7 @@
         <div class="item">
           <div class="icons-item enterprise-icon">
             <span class="number">
-              {{ 28 }}
+              {{ parkInfo.base?.chargePoleTotal }}
             </span>
           </div>
           <span class="title">入驻企业总数</span>
@@ -27,7 +39,7 @@
         <div class="item">
           <div class="icons-item car-icon">
             <span class="number">
-              {{ 20 }}
+              {{ parkInfo.base?.enterpriseTotal }}
             </span>
           </div>
           <span class="title">车位总数</span>
@@ -36,7 +48,7 @@
         <div class="item">
           <div class="icons-item rod-icon">
             <span class="number">
-              {{ 30 }}
+              {{ parkInfo.base?.parkingTotal }}
             </span>
           </div>
           <span class="title">一体杆总数</span>
@@ -88,7 +100,7 @@
           transform: translateX(-50%);
           font-size: 18px;
           font-family: FontquanXinYiGuanHeiTi, FontquanXinYiGuanHeiTi-Regular;
-          color: #ffffff;
+          color: black;
         }
       }
 
