@@ -1,6 +1,9 @@
 <script setup>
 import {ref, onMounted} from 'vue'
-import {getParkInfoAPI} from '@/api/park.js'
+
+import {useBigScreen} from '@/views/composables/bigscreen'
+
+const {parkInfo, getParkInfo} = useBigScreen()
 
 import * as echarts from 'echarts'
 const barChart = ref(null)
@@ -117,11 +120,6 @@ onMounted(async () => {
   initPieChart()
 })
 
-const parkInfo = ref({})
-const getParkInfo = async () => {
-  const res = await getParkInfoAPI()
-  parkInfo.value = res.data
-}
 </script>
 
 <template>
