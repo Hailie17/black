@@ -35,6 +35,7 @@ onMounted(async () => {
 </script>
 
 <template>
+  <VScaleScreen width="1920" height="1080">
   <div class="all-charts">
     <!-- 园区概况 -->
     <div class="section-one" v-if="Object.keys(parkInfo).length > 0">
@@ -112,6 +113,7 @@ onMounted(async () => {
     <!-- 准备3D渲染节点 -->
     <canvas class="canvas-3d" ref="ref3d" />
   </div>
+  </VScaleScreen>
 </template>
 
 <style lang="scss" scoped>
