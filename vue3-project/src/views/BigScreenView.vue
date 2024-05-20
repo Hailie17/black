@@ -3,6 +3,7 @@ import { onMounted, ref} from 'vue'
 // 导入模型解析构造函数
 import { Application } from '@splinetool/runtime'
 import {useBigScreen, useInitBarChart, useInitPieChart} from '@/views/composables/bigscreen'
+import LoadingComponent from '@/components/LoadingComponent.vue'
 
 const {parkInfo, getParkInfo} = useBigScreen()
 
@@ -10,11 +11,15 @@ const {barChart, initBarChart} = useInitBarChart(parkInfo)
 
 const {pieChart, initPieChart} = useInitPieChart(parkInfo)
 
+const showLoading = ref(false)
+
 const ref3d = ref(null)
 const init3D = () => {
   if (ref3d.value) {
     const app = new Application(ref3d.value)
+    showLoading.value = true
     app.load('https://fe-hmzs.itheima.net/scene.splinecode').then(() => {
+    showLoading.value = false
     console.log('3D模型加载并渲染完毕')
   })
   }
@@ -102,6 +107,8 @@ onMounted(async () => {
     </div>
   </div>
   <div class="model-container">
+    <!-- 进度条 -->
+    <LoadingComponent :loading="showLoading" />
     <!-- 准备3D渲染节点 -->
     <canvas class="canvas-3d" ref="ref3d" />
   </div>
