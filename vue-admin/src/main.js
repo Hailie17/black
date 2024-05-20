@@ -18,6 +18,9 @@ import '@/icons'
 
 import './permission'
 
+// 挂载乾坤
+import './registerMicroApp.js'
+
 Vue.use(ElementUI)
 
 // 上线后，控制台不显示警告
