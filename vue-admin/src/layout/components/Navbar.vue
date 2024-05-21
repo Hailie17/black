@@ -113,6 +113,8 @@ export default {
       }
     }
 
+    //1
+
     .avatar-container {
       padding-left: 10px;
       margin-right: 30px;
