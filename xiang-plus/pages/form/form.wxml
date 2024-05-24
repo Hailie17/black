@@ -1,0 +1,24 @@
+<!-- 提前准备好的布局结构代码 -->
+<view class="register">
+  <view class="legend">信息登记:</view>
+  <view class="form-field">
+    <label for="">姓名:</label>
+    <view class="field">...</view>
+  </view>
+  <view class="form-field">
+    <label for="">性别:</label>
+    <view class="field">...</view>
+  </view>
+  <view class="form-field">
+    <label for="">爱好:</label>
+    <view class="field">...</view>
+  </view>
+  <view class="form-field">
+    <label for="">籍贯:</label>
+    <view class="field">...</view>
+  </view>
+  <view class="form-field">
+    <label for="">生日:</label>
+    <view class="field">...</view>
+  </view>
+</view>
