@@ -3,7 +3,9 @@
   <view class="legend">信息登记:</view>
   <view class="form-field">
     <label for="">姓名:</label>
-    <view class="field">...</view>
+    <view class="field">
+      <input type="text" confirm-type="done" maxlength="4" placeholder="请输入姓名"/>
+    </view>
   </view>
   <view class="form-field">
     <label for="">性别:</label>
