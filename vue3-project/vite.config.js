@@ -17,6 +17,7 @@ export default defineConfig({
     // 防止开发阶段的assets 静态资源加载问题
     origin: '//localhost:5173'
   },
+  //1. 配置别名
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))
