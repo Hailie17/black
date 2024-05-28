@@ -1,3 +1,5 @@
+<auth></auth>
+
 <block wx:if="{{true}}">
   <scroll-view show-scrollbar="{{false}}" enhanced scroll-y>
     <view class="houses">
