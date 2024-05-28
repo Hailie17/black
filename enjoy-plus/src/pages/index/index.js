@@ -12,7 +12,7 @@ Page({
       method: 'GET'
     })
     this.setData({
-      list: res.data.data
+      list: res.data
     })
   }
 })
