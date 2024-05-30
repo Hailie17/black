@@ -6,5 +6,6 @@ wx.utils = utils
 wx.http = http
 
 App({
+  token: '',
   globalData: {},
 })

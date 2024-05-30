@@ -1,2 +1,1 @@
-<!--component/auth.wxml-->
-<text>www</text>
+<slot v-if='{{isLogin}}'></slot>
