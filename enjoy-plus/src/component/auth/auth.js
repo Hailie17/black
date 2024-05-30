@@ -27,8 +27,12 @@ Component({
         isLogin
       })
       if(!isLogin) {
+        const pages = getCurrentPages()
+        console.log(pages,1);
+        const page = pages[pages.length - 1]
+        console.log(page,11);
         wx.redirectTo({
-          url: '/pages/login/index',
+          url: '/pages/login/index?redirectUrl=/' + page.route,
         })
       }
     }

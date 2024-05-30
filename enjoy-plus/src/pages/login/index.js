@@ -22,6 +22,9 @@ Page({
     mobile:'',
     code: ''
   },
+  onLoad(query){
+    this.query = query
+  },
   //倒计时显示时间
   countDownChange(ev) {
     this.setData({
@@ -57,8 +60,9 @@ Page({
       // wx.setStorageSync('token', res.data.token)
       app.setToken('token',res.data.token)
       app.setToken('refreshToken',res.data.refreshToken)
+      console.log(this.query);
       wx.reLaunch({
-        url: '/pages/notify/index',
+        url: this.query.redirectUrl || '/pages/index/index',
       })
     }
   }
