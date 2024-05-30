@@ -22,9 +22,15 @@ Component({
   lifetimes: {
     attached(){
       const app = getApp()
+      const isLogin = Boolean(app.token)
       this.setData({
-        isLogin: Boolean(app.token)
+        isLogin
       })
+      if(!isLogin) {
+        wx.redirectTo({
+          url: '/pages/login/index',
+        })
+      }
     }
   }
 })

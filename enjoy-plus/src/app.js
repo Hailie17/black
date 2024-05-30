@@ -6,6 +6,6 @@ wx.utils = utils
 wx.http = http
 
 App({
-  token: '',
+  token: wx.batchGetStorageSync('token'),
   globalData: {},
 })
