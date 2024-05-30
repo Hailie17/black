@@ -58,12 +58,12 @@ Page({
       const app = getApp()
       // app.token = res.data.token
       // wx.setStorageSync('token', res.data.token)
-      app.setToken('token',res.data.token)
-      app.setToken('refreshToken',res.data.refreshToken)
-      console.log(this.query);
       wx.reLaunch({
         url: this.query.redirectUrl || '/pages/index/index',
       })
+      app.setToken('token',res.data.token)
+      app.setToken('refreshToken',res.data.refreshToken)
+      console.log(this.query);
     }
   }
 })
