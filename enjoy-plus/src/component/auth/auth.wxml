@@ -1,1 +1,1 @@
-<slot v-if='{{isLogin}}'></slot>
+<slot wx:if='{{isLogin}}'></slot>
