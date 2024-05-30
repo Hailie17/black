@@ -2,7 +2,7 @@ Page({
   data: {
     countDownVisible: true,
   },
-
+// 倒计时显示时间
   countDownChange(ev) {
     this.setData({
       timeData: ev.detail,
