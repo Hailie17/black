@@ -53,8 +53,10 @@ Page({
     if(isValidate) {
       const res = await wx.http.post('/login', {mobile,code})
       const app = getApp()
-      app.token = res.data.token
-      wx.setStorageSync('token', res.data.token)
+      // app.token = res.data.token
+      // wx.setStorageSync('token', res.data.token)
+      app.setToken('token',res.data.token)
+      app.setToken('refreshToken',res.data.refreshToken)
       wx.reLaunch({
         url: '/pages/notify/index',
       })
