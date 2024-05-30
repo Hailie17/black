@@ -44,5 +44,20 @@ Page({
     } else {
       wx.utils.toast(message)
     }
+  },
+
+  // 点击登录
+  async submit(){
+    const {mobile,code} =  this.data
+    const isValidate = this.validate(code)
+    if(isValidate) {
+      const res = await wx.http.post('/login', {mobile,code})
+      const app = getApp()
+      app.token = res.data.token
+      wx.setStorageSync('token', res.data.token)
+      wx.reLaunch({
+        url: '/pages/notify/index',
+      })
+    }
   }
 })
