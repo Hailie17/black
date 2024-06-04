@@ -9,7 +9,7 @@ App({
   token: wx.getStorageSync('token') || '',
   setToken(key,token){
     this[key] = token
-    wx.setStorageSync('key', token)
+    wx.setStorageSync(key, token)
   },
   globalData: {},
 })
