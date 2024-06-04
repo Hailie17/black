@@ -20,5 +20,22 @@ Page({
       nickName: e.detail.value
     })
   },
-  
+  changeAvatar(e){
+    wx.uploadFile({
+      filePath: e.detail.avatarUrl,
+      header: {
+        Authorization: "Bearer " + wx.getStorageSync('token')
+      },
+      name: 'file',
+      url: wx.http.baseURL + '/upload',
+      formData:{
+        type: 'avatar',
+      },
+      success: (res) => {
+        this.setData({
+          'userInfo.avatar': res.data.url
+        })
+      }
+    })
+  }
 })
