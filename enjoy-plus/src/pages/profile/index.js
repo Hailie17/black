@@ -1,6 +1,10 @@
 // pages/profile/index.ts
 Page({
-
+  async updateNickName(e){
+    const res = await wx.http.put('/userInfo', {
+      nickName: e.detail.value
+    })
+  },
   /**
    * 页面的初始数据
    */

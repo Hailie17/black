@@ -7,7 +7,7 @@ Page({
   data: {
     userInfo: {}
   },
-  onLoad(){
+  onShow(){
     const token = wx.getStorageSync('token')
     if (token) {
       this.getUserInfo()
