@@ -6,7 +6,15 @@ wx.utils = utils
 wx.http = http
 
 App({
-  token: wx.getStorageSync('token') || '',
+  onLaunch() {
+    // 读取 token
+    this.getToken()
+  },
+  getToken() {
+    // 读取本地的token
+    this.token = wx.getStorageSync('token')
+    this.refreshToken = wx.getStorageSync('refreshToken')
+  },
   setToken(key,token){
     this[key] = token
     wx.setStorageSync(key, token)
