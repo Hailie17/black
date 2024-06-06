@@ -20,22 +20,34 @@ Page({
       nickName: e.detail.value
     })
   },
-  changeAvatar(e){
-    wx.uploadFile({
-      filePath: e.detail.avatarUrl,
-      header: {
-        Authorization: "Bearer " + wx.getStorageSync('token')
-      },
+  async changeAvatar(e){
+    // 微信原生调用 wx.uploadFile
+    // wx.uploadFile({
+    //   filePath: e.detail.avatarUrl,
+    //   header: {
+    //     Authorization: "Bearer " + wx.getStorageSync('token')
+    //   },
+    //   name: 'file',
+    //   url: wx.http.baseURL + '/upload',
+    //   formData:{
+    //     type: 'avatar',
+    //   },
+    //   success: (res) => {
+    //     this.setData({
+    //       'userInfo.avatar': res.data.url
+    //     })
+    //   }
+    // })
+    // 
+    const res = await wx.http.upload('/upload', {
       name: 'file',
-      url: wx.http.baseURL + '/upload',
       formData:{
         type: 'avatar',
       },
-      success: (res) => {
-        this.setData({
-          'userInfo.avatar': res.data.url
-        })
-      }
+      filePath: e.detail.avatarUrl,
+    })
+    this.setData({
+      'userInfo.avatar': res.data.url
     })
   }
 })
