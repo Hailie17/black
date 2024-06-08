@@ -28,9 +28,11 @@ Component({
       })
       if(!isLogin) {
         const pages = getCurrentPages()
-        console.log(pages,1);
         const page = pages[pages.length - 1]
-        console.log(page,11);
+        // 重写页面的生命周期函数，未登录时，不执行里面的方法
+        page.onLoad = () => {}
+        page.onShow = () => {}
+        page.onReady = () => {}
         wx.redirectTo({
           url: '/pages/login/index?redirectUrl=/' + page.route,
         })
