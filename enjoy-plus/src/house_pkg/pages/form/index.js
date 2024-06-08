@@ -5,6 +5,10 @@ Page({
     idcardFrontUrl: '/static/images/avatar_1.jpg',
     idcardBackUrl: '/static/images/avatar_2.jpg',
   },
+  onLoad({ point, building, room }) {
+    // 获取房屋信息数据
+    this.setData({ point, building, room })
+  },
   goList() {
     wx.reLaunch({
       url: '/house_pkg/pages/list/index',
