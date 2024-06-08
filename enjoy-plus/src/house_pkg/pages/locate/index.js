@@ -7,16 +7,18 @@ Page({
   data: {
     list: []
   },
-  onLoad() {
-    this.search()
+  async onLoad() {
+    const {longitude,latitude} = await wx.getLocation({type: 'gcj02'})
+    this.search({longitude,latitude})
   },
-  search() {
+  search({longitude,latitude}) {
     // 调用腾讯位置服务的搜索
     qqMapSDK.search({
-      keyword: '住在小区',
+      // 当前位置坐标
+      location: {longitude,latitude},
+      keyword: '住宅小区',
       page_size: 5,
       success: (res) => {
-        console.log('res', res)
         this.setData({
           list: res.data
         })
