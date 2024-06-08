@@ -13,6 +13,14 @@ Page({
     this.search({longitude,latitude})
     this.getPoint({longitude,latitude})
   },
+  // 选择位置
+  async chooseLocation(){
+    const {name, latitude, longitude} = await wx.chooseLocation()
+    this.setData({
+      address: name
+    })
+    this.getPoint({longitude,latitude})
+  },
   getPoint({longitude,latitude}){
     // 获取当前位置的文本信息
     qqMapSDK.reverseGeocoder({
