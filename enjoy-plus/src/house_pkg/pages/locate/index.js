@@ -5,11 +5,24 @@ const qqMapSDK = new QQMapWX({
 })
 Page({
   data: {
-    list: []
+    list: [],
+    address: ''
   },
   async onLoad() {
     const {longitude,latitude} = await wx.getLocation({type: 'gcj02'})
     this.search({longitude,latitude})
+    this.getPoint({longitude,latitude})
+  },
+  getPoint({longitude,latitude}){
+    // 获取当前位置的文本信息
+    qqMapSDK.reverseGeocoder({
+      location: {longitude,latitude},
+      success: res => {
+        this.setData({
+          address: res.result.address
+        })
+      }
+    })
   },
   search({longitude,latitude}) {
     // 调用腾讯位置服务的搜索
