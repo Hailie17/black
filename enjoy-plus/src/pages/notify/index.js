@@ -6,12 +6,10 @@ Page({
   data: {
     detail: {},
   },
-
-  //111
+  // 1
   /**
    * 生命周期函数--监听页面加载
    */
-  //1
   onLoad(query) {
     this.getData(query.id)
   },
@@ -22,7 +20,6 @@ Page({
       detail: res.data,
     })
   },
-
   /**
    * 生命周期函数--监听页面初次渲染完成
    */

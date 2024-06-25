@@ -1,7 +1,7 @@
 .DS_Store
 node_modules
 /dist
-
+黑马智数项目-配套资料
 
 # local env files
 .env.local
