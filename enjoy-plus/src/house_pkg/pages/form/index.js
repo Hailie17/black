@@ -3,7 +3,6 @@ import wxValidate from 'wechat-validate'
 Page({
   behaviors: [wxValidate],
   data: {
-<<<<<<< HEAD
     idcardFrontUrl: '',
     idcardBackUrl: '',
     id: '',
@@ -13,10 +12,8 @@ Page({
     name: '',
     gender: 1,
     mobile: '',
-=======
     idcardFrontUrl: '/static/images/avatar_1.jpg',
     idcardBackUrl: '/static/images/avatar_2.jpg',
->>>>>>> parent of 128ed2b (双向数据收集，保存表单数据)
   },
   rules: {
     name: [
