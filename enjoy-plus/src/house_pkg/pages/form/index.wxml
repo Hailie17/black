@@ -6,7 +6,7 @@
     <van-cell-group border="{{false}}" title="业主信息">
       <van-field model:value="{{ name }}" label="姓名" placeholder="请填写您的真实姓名" />
       <van-cell title-width="200rpx" title="性别">
-        <van-radio-group direction="horizontal" value="{{ 1 }}">
+        <van-radio-group direction="horizontal" value="{{ gender }}">
           <van-radio icon-size="36rpx" checked-color="#5591AF" name="1">男</van-radio>
           <van-radio icon-size="36rpx" checked-color="#5591AF" name="2">女</van-radio>
         </van-radio-group>

@@ -10,7 +10,7 @@ Page({
     building: '',
     room: '',
     name: '',
-    gender: 1,
+    gender: '1', //性别默认选中
     mobile: '',
     idcardFrontUrl: '/static/images/avatar_1.jpg',
     idcardBackUrl: '/static/images/avatar_2.jpg',
