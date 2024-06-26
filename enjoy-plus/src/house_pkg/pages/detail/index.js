@@ -4,6 +4,7 @@ Page({
   },
   onLoad(query){
     this.getDetail(query.id)
+    this.id = query.id
   },
   async getDetail(id){
     const res = await wx.http.get(`/room/${id}`)
@@ -13,7 +14,7 @@ Page({
   },
   editHouse() {
     wx.navigateTo({
-      url: '/house_pkg/pages/form/index',
+      url: '/house_pkg/pages/form/index?id=' + this.id,
     })
   },
 })

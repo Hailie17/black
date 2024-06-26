@@ -10,7 +10,7 @@ Page({
     building: '',
     room: '',
     name: '',
-    gender: '1', //性别默认选中
+    gender: 1, //性别默认选中
     mobile: '',
     idcardFrontUrl: '/static/images/avatar_1.jpg',
     idcardBackUrl: '/static/images/avatar_2.jpg',
@@ -27,9 +27,26 @@ Page({
     idcardFrontUrl: [{ required: true, message: '请上传身份证国徽面!' }],
     idcardBackUrl: [{ required: true, message: '请上传身份证照片面!' }],
   },
-  onLoad({ point, building, room }) {
-    // 获取房屋信息数据
-    this.setData({ point, building, room })
+  onLoad({ point, building, room, id }) {
+    if(id){
+      //有id 编辑页面
+      this.getDtail(id)
+      // 设置导航栏标题
+      wx.setNavigationBarTitle({
+        title: '编辑房屋信息',
+      })
+    }else {
+      // 获取房屋信息数据
+      this.setData({ point, building, room })
+      // 设置导航栏标题
+      wx.setNavigationBarTitle({
+        title: '添加房屋信息',
+      })
+    }
+  },
+  async getDtail(id){
+    const res = await wx.http.get(`/room/${id}`)
+    this.setData(res.data)
   },
   // goList() {
   //   wx.reLaunch({
