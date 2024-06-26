@@ -24,9 +24,9 @@ Page({
     }
   },
 
-  goDetail() {
+  goDetail(e) {
     wx.navigateTo({
-      url: '/house_pkg/pages/detail/index',
+      url: '/house_pkg/pages/detail/index?id=' + e.mark.id,
     })
   },
 
