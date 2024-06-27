@@ -13,6 +13,7 @@ Page({
     idcardFrontUrl: '/static/images/avatar_1.jpg',
     idcardBackUrl: '/static/images/avatar_2.jpg',
   },
+  // ll
   rules: {
     name: [
       { required: true, message: '业主姓名不能为空!' },
@@ -26,14 +27,14 @@ Page({
     idcardBackUrl: [{ required: true, message: '请上传身份证照片面!' }],
   },
   onLoad({ point, building, room, id }) {
-    if(id){
+    if (id) {
       //有id 编辑页面
       this.getDtail(id)
       // 设置导航栏标题
       wx.setNavigationBarTitle({
         title: '编辑房屋信息',
       })
-    }else {
+    } else {
       // 获取房屋信息数据
       this.setData({ point, building, room })
       // 设置导航栏标题
@@ -42,7 +43,7 @@ Page({
       })
     }
   },
-  async getDtail(id){
+  async getDtail(id) {
     const res = await wx.http.get(`/room/${id}`)
     this.setData(res.data)
   },
@@ -71,23 +72,23 @@ Page({
     wx.navigateBack({ delta: form.id ? 2 : 4 })
   },
   // 选择图片
-  async choosePicture(e){
+  async choosePicture(e) {
     // 结构出事件参数，区分正反的点击
-    const {type} = e.mark
-    const {tempFiles} = await wx.chooseMedia({
+    const { type } = e.mark
+    const { tempFiles } = await wx.chooseMedia({
       count: 1,
-      mediaType: ['image']
+      mediaType: ['image'],
     })
-    if(tempFiles[0].size > 1 *1024 *1024){
+    if (tempFiles[0].size > 1 * 1024 * 1024) {
       return wx.utils.toast('图片大小不能超过1M')
     }
-    const res = await wx.http.upload('/upload',{
+    const res = await wx.http.upload('/upload', {
       name: 'file',
-      filePath: tempFiles[0].tempFilePath
+      filePath: tempFiles[0].tempFilePath,
     })
     this.setData({
       // 用[]插值语法，动态设置key值
-      [type]: res.data.url
+      [type]: res.data.url,
     })
-  }
+  },
 })
