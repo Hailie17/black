@@ -2,6 +2,7 @@ Page({
   data: {
     list: [],
     dialogVisible: false,
+    isFirstLoad: true
   },
   onShow(){
     this.getList()
@@ -9,7 +10,8 @@ Page({
   async getList(){
     const res = await wx.http.get('/room')
     this.setData({
-      list: res.data
+      list: res.data,
+      isFirstLoad: false
     })
   },
   swipeClose(ev) {
