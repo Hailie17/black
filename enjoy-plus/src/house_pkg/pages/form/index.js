@@ -3,9 +3,7 @@ import wxValidate from 'wechat-validate'
 Page({
   behaviors: [wxValidate],
   data: {
-    idcardFrontUrl: '',
-    idcardBackUrl: '',
-    id: '',
+    id: undefined,
     point: '',
     building: '',
     room: '',
@@ -64,13 +62,13 @@ Page({
     const isValid = this.validate()
     if (!isValid) return
     // 获取全部的数据（剔除可能多余参数 __webviewId__）
-    const { __webviewId__, id, ...form } = this.data
+    const { __webviewId__, status, ...form } = this.data
     // 调用接口
     const { code } = await wx.http.post('/room', form)
     // 检测接口是否调用成功
     if (code !== 10000) return wx.utils.toast('提交数据失败!')
     // 返回房屋列表页面
-    wx.navigateBack({ delta: 4 })
+    wx.navigateBack({ delta: form.id ? 2 : 4 })
   },
   // 选择图片
   async choosePicture(e){
