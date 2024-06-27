@@ -14,6 +14,7 @@ Page({
   },
   swipeClose(ev) {
     const { position, instance } = ev.detail
+    this.id = ev.mark.id
     if (position === 'right') {
       // 显示 Dialog 对话框
       this.setData({
@@ -23,7 +24,14 @@ Page({
       instance.close()
     }
   },
-
+  async dialogClose(e){
+    if (e.detail === 'confirm') {
+      await wx.http.delete(`/room/${this.id}`)
+      this.setData({
+        list: this.data.list.filter((v) => v.id !== this.id)
+      })
+    }
+  },
   goDetail(e) {
     wx.navigateTo({
       url: '/house_pkg/pages/detail/index?id=' + e.mark.id,
