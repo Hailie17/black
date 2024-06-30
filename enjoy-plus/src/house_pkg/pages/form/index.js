@@ -14,6 +14,7 @@ Page({
     idcardBackUrl: '/static/images/avatar_2.jpg',
   },
   // ll
+  // 22
   rules: {
     name: [
       { required: true, message: '业主姓名不能为空!' },
