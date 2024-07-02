@@ -69,6 +69,15 @@ Page({
       attachment: this.data.attachment.filter((v,index) => index !== ev.detail.index)
     })
   },
+  //文件读取前
+  beforeRead(ev){
+    const {file,callback} = ev.detail
+    if(file.size > 1024 * 1024 * 1) {
+      return callback(false)
+    }
+    callback(true)
+  },
+
   openHouseLayer() {
     this.setData({ houseLayerVisible: true })
   },
