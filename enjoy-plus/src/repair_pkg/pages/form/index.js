@@ -55,13 +55,18 @@ Page({
   },
   // 上传图片
   async afterRead(ev){
-    console.log(ev,88);
     const res = await wx.http.upload('/upload', {
       name: 'file',
       filePath: ev.detail.file.url
     })
     this.setData({
       attachment: [...this.data.attachment, res.data]
+    })
+  },
+  // 删除图片
+  uploadDelete(ev){
+    this.setData({
+      attachment: this.data.attachment.filter((v,index) => index !== ev.detail.index)
     })
   },
   openHouseLayer() {
