@@ -48,12 +48,8 @@ Page({
   },
   // 选则日期
   comfirmDate(ev){
-    const date = new Date(ev.detail)
-    const year = date.getFullYear()
-    const month = date.getMonth() + 1
-    const day = date.getDate()
     this.setData({
-      appointment: `${year}-${month}-${day}`,
+      appointment: wx.utils.formatDate(ev.detail),
       dateLayerVisible: false
     })
   },
