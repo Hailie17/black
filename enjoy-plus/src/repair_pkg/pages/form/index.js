@@ -53,6 +53,17 @@ Page({
       dateLayerVisible: false
     })
   },
+  // 上传图片
+  async afterRead(ev){
+    console.log(ev,88);
+    const res = await wx.http.upload('/upload', {
+      name: 'file',
+      filePath: ev.detail.file.url
+    })
+    this.setData({
+      attachment: [...this.data.attachment, res.data]
+    })
+  },
   openHouseLayer() {
     this.setData({ houseLayerVisible: true })
   },
