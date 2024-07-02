@@ -17,10 +17,10 @@
       <van-cell
         title-width="100"
         title="预约日期"
-        value-class=""
+        value-class="{{appointment? 'active-cell':''}}"
         bind:click="openDateLayer"
         is-link
-        value="请选择上门维修日期"
+        value="{{appointment || '请选择上门维修日期'}}"
       />
       <van-cell use-label-slot title="问题描述">
         <van-field
@@ -74,6 +74,6 @@
 
 <!-- 弹出层 -->
 <van-popup bind:close="closeDateLayer" round show="{{ dateLayerVisible }}" position="bottom">
-  <van-datetime-picker type="date" value="{{ currentDate }}" min-date="{{ currentDate }}" max-date="{{ currentDate + 1000*60*60*24*7 }}" />
+  <van-datetime-picker type="date" value="{{ currentDate }}" bind:confirm="comfirmDate" min-date="{{ currentDate }}" max-date="{{ currentDate + 1000*60*60*24*7 }}" />
 </van-popup>
 </auth>
