@@ -24,7 +24,8 @@ Page({
         width: 32,
         height: 50
       }
-    ]
+    ],
+    polyline: []
   },
   onLoad(){
     this.getPolyLine()
@@ -32,16 +33,38 @@ Page({
   getPolyLine(){
     qqMapSDK.direction({
       mode: 'bicycling',
-      form: {latitude: 40.061539,
-        longitude: 116.341847,},
-      to: {latitude: 40.060539,
-        longitude: 116.343847},
+        form: {
+          latitude: 40.061539,
+          longitude: 116.341847,
+        },
+        to: {
+          latitude: 40.060539,
+          longitude: 116.343847
+        },
       success: (e) => {
         console.log(e,'e');
+        const coors = e.result.route[0].polyline
+        for (let i = 2; i < coors.length; i++) {
+          coors[i] = coors[i - 2] + coors[i] / 1000000
+        }
+        const points = []
+        for (let i = 0; i < coors.length; i += 2) {
+          points.push({latitude: coors[i], longitude: coors[i + 1]})
+        }
+        this.setData({
+          polyline:[
+            {
+              points,
+              color: 'green',
+              width: 4
+            }
+          ]
+        })
       },
       fail: (e) => {
         console.log(e,222);
-      }
+      },
+
     })
   }
 })
