@@ -33,7 +33,7 @@ Page({
   getPolyLine(){
     qqMapSDK.direction({
       mode: 'bicycling',
-        form: {
+        from: {
           latitude: 40.061539,
           longitude: 116.341847,
         },
