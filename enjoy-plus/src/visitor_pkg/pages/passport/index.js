@@ -6,6 +6,7 @@ Page({
       imageUrl: 'https://enjoy-plus.oss-cn-beijing.aliyuncs.com/images/share_poster.png',
     }
   },
+  // 1
   authSetting(){
     wx.getSetting({
       success: ({authSetting}) => {
